@@ -19,11 +19,21 @@
 
  #include "private.h"
 
+ Udjat::DMI::Controller * Udjat::DMI::Controller::instance = nullptr;
+
  Udjat::DMI::Controller::Controller(void *handle) : Udjat::Module(Quark("DMI"),handle) {
 	cout << "DMI\tModule loaded" << endl;
+	instance = this;
  }
 
  Udjat::DMI::Controller::~Controller() {
 	cout << "DMI\tModule unloaded" << endl;
+	instance = nullptr;
  }
 
+ Udjat::DMI::Controller & Udjat::DMI::Controller::getInstance() {
+	if(!instance) {
+		throw runtime_error("DMI Controller is not available");
+	}
+	return *instance;
+ }

@@ -17,49 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+ // References:
+ //
+ // https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-firmware-dmi-entries
 
-#include <udjat/defs.h>
-#include <udjat/module.h>
-#include <udjat/agent.h>
+ #include "private.h"
 
-using namespace std;
-using namespace Udjat;
+ static const char * dmipath = "/sys/firmware/dmi/";
 
-namespace Udjat {
+ Udjat::DMI::Factory::Factory() : Abstract::Agent::Factory(Quark("dmi")) {
 
-	namespace DMI {
+	cout << "DMI\tAgent factory is active" << endl;
 
-		/// @brief SMBIOS read agent.
-		class Factory : public Abstract::Agent::Factory {
-		private:
 
-		public:
-			Factory();
-			virtual ~Factory();
+ }
 
-			void parse(Abstract::Agent &parent, const pugi::xml_node &node) const override;
+ Udjat::DMI::Factory::~Factory() {
 
-		};
+	cout << "DMI\tAgent factory is inactive" << endl;
 
-		/// @brief DMI module controller.
-		class Controller : public Udjat::Module {
-		private:
-			static Controller * instance;
+ }
 
-			// Agent factory.
-			Factory smbios;
-
-		public:
-			Controller(void *handle);
-			virtual ~Controller();
-
-			static Controller & getInstance();
-
-		};
+ void Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
 
 
 
-	}
-
-}
+ }
