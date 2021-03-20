@@ -18,8 +18,10 @@
  */
 
  #include "../private.h"
+ #include <udjat.h>
  #include <udjat/module.h>
  #include <udjat/tools/logger.h>
+ #include <pugixml.hpp>
 
  using namespace std;
  using namespace Udjat;
@@ -30,8 +32,25 @@ int main(int argc, char **argv) {
 
 	Logger::redirect();
 
-	udjat_module_init(NULL);
+	auto module = udjat_module_init(NULL);
+
+	auto root_agent = Abstract::Agent::set_root(make_shared<Abstract::Agent>("root","System","Application"));
+
+	/*
+	const char * xml_filename = "test.xml";
+
+	{
+		pugi::xml_document doc;
+		doc.load_file(xml_filename);
+		root_agent->load(doc);
+	}
+	*/
+
+	Udjat::start();
 
 
+	Udjat::stop();
+
+	delete module;
 	return 0;
 }

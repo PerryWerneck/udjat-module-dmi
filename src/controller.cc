@@ -19,7 +19,7 @@
 
  #include "private.h"
 
- Udjat::DMI::Controller::Controller(void *handle) Udjat::Module(Quark("DMI"),handle) {
+ Udjat::DMI::Controller::Controller(void *handle) : Udjat::Module(Quark("DMI"),handle) {
 	cout << "DMI\tModule loaded" << endl;
  }
 
