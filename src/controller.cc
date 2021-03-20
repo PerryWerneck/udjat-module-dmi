@@ -17,28 +17,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+ #include "private.h"
 
-#include <udjat/defs.h>
-#include <udjat/module.h>
+ Udjat::DMI::Controller::Controller(void *handle) Udjat::Module(Quark("DMI"),handle) {
+	cout << "DMI\tModule loaded" << endl;
+ }
 
-using namespace std;
-using namespace Udjat;
+ Udjat::DMI::Controller::~Controller() {
+	cout << "DMI\tModule unloaded" << endl;
+ }
 
-namespace Udjat {
-
-	namespace DMI {
-
-		class Controller : public Udjat::Module {
-		private:
-
-		public:
-			Controller(void *handle);
-			virtual ~Controller();
-
-		};
-
-
-	}
-
-}

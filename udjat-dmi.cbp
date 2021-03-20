@@ -38,6 +38,7 @@
 		<Linker>
 			<Add option="`pkg-config --libs libudjat`" />
 		</Linker>
+		<Unit filename="src/controller.cc" />
 		<Unit filename="src/init.cc" />
 		<Unit filename="src/private.h" />
 		<Unit filename="src/testprogram/testprogram.cc" />
