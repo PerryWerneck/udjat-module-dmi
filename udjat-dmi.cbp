@@ -38,6 +38,7 @@
 		<Linker>
 			<Add option="`pkg-config --libs libudjat`" />
 		</Linker>
+		<Unit filename="src/agent.cc" />
 		<Unit filename="src/controller.cc" />
 		<Unit filename="src/factory.cc" />
 		<Unit filename="src/init.cc" />

@@ -17,17 +17,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+ // References:
+ //
+ // https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-firmware-dmi-entries
+
  #include "private.h"
 
- Udjat::DMI::Factory::Factory() : Abstract::Agent::Factory(Quark("dmi")) {
-	cout << "DMI\tAgent factory is active" << endl;
+ static const char * dmipath = "/sys/firmware/dmi/";
+
+ Udjat::DMI::Agent::Agent(const pugi::xml_node &node) {
+
  }
 
- Udjat::DMI::Factory::~Factory() {
-	cout << "DMI\tAgent factory is inactive" << endl;
+ Udjat::DMI::Agent::~Agent() {
+
  }
 
- void Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
-	setup(parent, node, make_shared<Agent>(node));
+ void Udjat::DMI::Agent::get(const char *name, Json::Value &value){
+
  }
 
