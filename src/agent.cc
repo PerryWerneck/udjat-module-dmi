@@ -35,9 +35,7 @@
 
 	const char *name;
 
- 	Type(const char *n) : name(n) {}
-
-	static size_t indexByName(const char *name);
+ 	static size_t indexByName(const char *name);
 
  };
 
