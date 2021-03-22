@@ -158,6 +158,13 @@
 		}
 	}
 
+	// Get index
+	{
+		auto index = node.attribute("index");
+		if(index) {
+			id[2] = index.as_uint(id[2]);
+		}
+	}
 
 #ifdef DEBUG
 	cout << "DMI\tID is " << to_string((int) this->id[0]) << "-" << to_string((int) this->id[1]) << "-" << to_string((int) this->id[2]) << endl;
@@ -170,43 +177,70 @@
 
  }
 
+ static size_t read_file(const string &filename, char buffer[4096]) {
+
+	int fd = open(filename.c_str(),O_RDONLY);
+	if(fd < 0) {
+		string msg{"Error opening "};
+		msg += filename;
+		throw system_error(errno,system_category(),msg);
+	}
+
+	memset(buffer,0,4096);
+	auto length = read(fd,buffer,4095);
+	if(length < 0) {
+		string msg{"Error reading "};
+		msg += filename;
+		auto err = errno;
+		close(fd);
+		throw system_error(err,system_category(),msg);
+	}
+
+	close(fd);
+
+	return (size_t) length;
+
+ }
+
  void Udjat::DMI::Agent::get(const char *name, Json::Value &value){
 
+	char buffer[4096];
+	size_t offset = 0;
+
+ 	// Build base path
+	string path{dmipath};
+
+	path += "entries/";
+	path += to_string((unsigned int) id[0]);
+	path += "-";
+	path += to_string((unsigned int) id[1]);
+	path += "/";
+
+	// Get header length
+	try {
+
+		read_file(path+"length",buffer);
+		offset = atoi(buffer);
+
+ 	} catch(const exception &e) {
+
+		failed(e,"Cant get DMI header length");
+		throw;
+ 	}
+
+
+ 	// Read DMI Strings
  	try {
 
-		char buffer[4096];
+		read_file(path+"raw",buffer);
 
-		string path{dmipath};
-
-		path += "entries/";
-		path += to_string((unsigned int) id[0]);
-		path += "-";
-		path += to_string((unsigned int) id[1]);
-		path += "/raw";
-
-		int fd = open(path.c_str(),O_RDONLY);
-		if(fd < 0) {
-			string msg{"Error opening "};
-			msg += path;
-			throw system_error(errno,system_category(),msg);
-		}
-
-		memset(buffer,0,4096);
-		auto length = read(fd,buffer,4095);
-		if(length < 0) {
-			string msg{"Error reading "};
-			msg += path;
-			auto err = errno;
-			close(fd);
-			throw system_error(err,system_category(),msg);
-		}
-
-		close(fd);
+//		const char *strings = &buffer[offset];
+//		cout << "[" << strings << "]" << endl;
 
 
  	} catch(const exception &e) {
 
-		failed(e,"Cant access DMI data");
+		failed(e,"Cant read raw DMI info");
 		throw;
  	}
 
