@@ -46,7 +46,7 @@ namespace Udjat {
 		/// @brief
 		class Agent : public Udjat::Abstract::Agent {
 		private:
-			unsigned char id[3];
+			uint8_t id[3];
 
 		public:
 			Agent(const pugi::xml_node &node);

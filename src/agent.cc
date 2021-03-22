@@ -20,6 +20,8 @@
  // References:
  //
  // https://www.kernel.org/doc/Documentation/ABI/testing/sysfs-firmware-dmi-entries
+ // https://github.com/mirror/dmidecode/blob/master/dmidecode.c
+ // https://gitlab.yottabyte.com/open-source/mcelog/-/blob/master/dmi.c
 
  #include "private.h"
  #include <sys/stat.h>
@@ -29,32 +31,132 @@
 
  static const char * dmipath = "/sys/firmware/dmi/";
 
+ static const char *types[] = {
+	"BIOS", // 0
+	"System",
+	"Base Board",
+	"Chassis",
+	"Processor",
+	"Memory Controller",
+	"Memory Module",
+	"Cache",
+	"Port Connector",
+	"System Slots",
+	"On Board Devices",
+	"OEM Strings",
+	"System Configuration Options",
+	"BIOS Language",
+	"Group Associations",
+	"System Event Log",
+	"Physical Memory Array",
+	"Memory Device",
+	"32-bit Memory Error",
+	"Memory Array Mapped Address",
+	"Memory Device Mapped Address",
+	"Built-in Pointing Device",
+	"Portable Battery",
+	"System Reset",
+	"Hardware Security",
+	"System Power Controls",
+	"Voltage Probe",
+	"Cooling Device",
+	"Temperature Probe",
+	"Electrical Current Probe",
+	"Out-of-band Remote Access",
+	"Boot Integrity Services",
+	"System Boot",
+	"64-bit Memory Error",
+	"Management Device",
+	"Management Device Component",
+	"Management Device Threshold Data",
+	"Memory Channel",
+	"IPMI Device",
+	"Power Supply",
+	"Additional Information",
+	"Onboard Device",
+	"Management Controller Host Interface",
+	"TPM Device", // 43
+ };
+
+ #define type_length (sizeof(types)/sizeof(type[0]))
+
+
+
+ static bool isNumber(const char *str) {
+ 	for(const char *ptr = str;*ptr;ptr++) {
+		if(*ptr < '0' || *ptr > '9') {
+			return false;
+		}
+ 	}
+	return true;
+ }
+
+ static uint8_t getTypeFromName(const char *type) {
+
+	size_t length = strlen(type);
+
+ 	if(isNumber(type))
+		return atoi(type);
+
+	for(size_t index = 0; index < type_length;index++ ) {
+ 		if(strncasecmp(types[index],type,length) == 0)
+			return (uint8_t) index;
+	}
+
+	string msg{"Unexpected type name: "};
+	msg += type;
+
+	throw runtime_error(msg);
+
+ }
+
  Udjat::DMI::Agent::Agent(const pugi::xml_node &node) {
 
 #ifdef DEBUG
 	cout << "DMI\tCreating agent " << node.attribute("name").as_string() << endl;
 #endif // DEBUG
 
-	const char * id = node.attribute("id").as_string();
+	// Reset
+	id[0] = id[1] = id[2] = 0;
 
-	if(id && *id) {
+	// Check if the entry has an ID in the format type-instance-field
+	{
+		const char * id = node.attribute("id").as_string();
+		if(id && *id) {
 
-		// Split id.
-		const char *first = id;
-		for(size_t index = 0; index < 3; index++) {
-			const char *last = strchr(first,'-');
-			if(last) {
-				this->id[index] = atoi(string(first,last-first).c_str());
-			} else {
-				this->id[index] = atoi(first);
-				break;
+			// Split id.
+			const char *first = id;
+			for(size_t index = 0; index < 3; index++) {
+				const char *last = strchr(first,'-');
+				if(last) {
+					this->id[index] = atoi(string(first,last-first).c_str());
+				} else {
+					this->id[index] = atoi(first);
+					break;
+				}
+
+				first = last+1;
 			}
 
-			first = last+1;
 		}
 
 	}
 
+	// Check for type attribute
+	{
+		auto type = node.attribute("type");
+		if(type) {
+			id[0] = getTypeFromName(type.as_string());
+		}
+	}
+
+	// Check for instance attribute
+	{
+		auto instance = node.attribute("instance");
+		if(instance) {
+			id[1] = instance.as_uint(id[1]);
+		}
+	}
 
 
 #ifdef DEBUG
@@ -70,9 +172,9 @@
 
  void Udjat::DMI::Agent::get(const char *name, Json::Value &value){
 
-	char buffer[4096];
-
  	try {
+
+		char buffer[4096];
 
 		string path{dmipath};
 
@@ -99,9 +201,8 @@
 			throw system_error(err,system_category(),msg);
 		}
 
-		cout << "************* " << length << endl;
-
 		close(fd);
+
 
  	} catch(const exception &e) {
 
