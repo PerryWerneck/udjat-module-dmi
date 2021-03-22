@@ -113,7 +113,7 @@ AC_TRY_RUN([int main() { return 0; }],
 CC="$ac_save_cc"])
 AC_MSG_RESULT($app_cv_fvisibility_ok)
 if test $app_cv_fvisibility_ok = yes; then
-  CFLAGS="$CFLAGS -fvisibility=hidden"
+  CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
 fi
 
 dnl ---------------------------------------------------------------------------
