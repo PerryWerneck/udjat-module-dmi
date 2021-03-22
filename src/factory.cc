@@ -28,6 +28,10 @@
  }
 
  void Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
+#ifdef DEBUG
+	cout << "DMI\tParsing DMI agent factory" << endl;
+#endif // DEBUG
+
 	setup(parent, node, make_shared<Agent>(node));
  }
 

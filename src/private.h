@@ -22,6 +22,7 @@
 #include <udjat/defs.h>
 #include <udjat/module.h>
 #include <udjat/agent.h>
+#include <stdexcept>
 
 using namespace std;
 using namespace Udjat;

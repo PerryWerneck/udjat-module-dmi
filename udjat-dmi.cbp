@@ -44,6 +44,7 @@
 		<Unit filename="src/init.cc" />
 		<Unit filename="src/private.h" />
 		<Unit filename="src/testprogram/testprogram.cc" />
+		<Unit filename="test.xml" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
