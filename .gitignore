@@ -40,4 +40,12 @@
 .bin
 *.depend
 
+# Autoconf
+Makefile
+aclocal.m4
+autom4te.cache
+*.log
+*.status
+configure
+scripts
 
