@@ -17,12 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+ #include "config.h"
  #include "private.h"
 
  Udjat::DMI::Controller * Udjat::DMI::Controller::instance = nullptr;
 
  Udjat::DMI::Controller::Controller(void *handle) : Udjat::Module(Quark("DMI"),handle) {
-	cout << "DMI\tModule loaded" << endl;
+
+	static const Udjat::ModuleInfo info = {
+
+		PACKAGE_NAME,		// The module name.
+		"DMI Agent", 		// The module description.
+		PACKAGE_VERSION, 	// The module version.
+		PACKAGE_BUGREPORT, 	// The bugreport address.
+		PACKAGE_URL, 		// The package URL.
+
+	};
+
+	this->info = &info;
 	instance = this;
  }
 

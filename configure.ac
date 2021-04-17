@@ -15,7 +15,7 @@ dnl Compute the canonical host-system type
 AC_CANONICAL_HOST
 
 dnl Put macro definitions here (though they aren't used).
-dnl AC_CONFIG_HEADER([src/include/config.h])
+AC_CONFIG_HEADER([src/config.h])
 
 dnl Initialise automake stuff.
 AM_INIT_AUTOMAKE
@@ -38,8 +38,8 @@ dnl ---------------------------------------------------------------------------
 app_vrs_major=$(echo $VERSION | cut -d. -f1)
 app_vrs_minor=$(echo $VERSION | cut -d. -f2)
 
-AC_DEFINE_UNQUOTED(PACKAGE_MAJOR_VERSION, $app_vrs_major)
-AC_DEFINE_UNQUOTED(PACKAGE_MINOR_VERSION, $app_vrs_minor)
+AC_DEFINE_UNQUOTED(PACKAGE_MAJOR_VERSION, $app_vrs_major, [The package minor version])
+AC_DEFINE_UNQUOTED(PACKAGE_MINOR_VERSION, $app_vrs_minor, [The package major version])
 
 AC_SUBST(PACKAGE_MAJOR_VERSION,$app_vrs_major)
 AC_SUBST(PACKAGE_MINOR_VERSION,$app_vrs_minor)
@@ -151,24 +151,24 @@ PKG_CHECK_EXISTS
 dnl ---------------------------------------------------------------------------
 dnl Check for libudjat
 dnl ---------------------------------------------------------------------------
-PKG_CHECK_MODULES( [UDJAT], [libudjat], AC_DEFINE(HAVE_ECONF), AC_MSG_ERROR([libudjat not present.]) )
+PKG_CHECK_MODULES( [UDJAT], [libudjat], AC_DEFINE(HAVE_ECONF,[],[Do we have econf]), AC_MSG_ERROR([libudjat not present.]) )
 
 AC_SUBST(UDJAT_LIBS)
 AC_SUBST(UDJAT_CFLAGS)
 
 app_cv_product=`pkg-config --variable=product_name libudjat`
-AC_DEFINE_UNQUOTED(PRODUCT_NAME, $app_cv_product)
+AC_DEFINE_UNQUOTED(PRODUCT_NAME, $app_cv_product,[The product name])
 AC_SUBST(PRODUCT_NAME,$app_cv_product)
 
 app_cv_module_path=`pkg-config --variable=module_path libudjat`
-AC_DEFINE_UNQUOTED(MODULE_PATH, $app_cv_module_path)
+AC_DEFINE_UNQUOTED(MODULE_PATH, $app_cv_module_path, [The path for module installation])
 AC_SUBST(MODULE_PATH,$app_cv_module_path)
 
 dnl ---------------------------------------------------------------------------
 dnl test for pugixml
 dnl ---------------------------------------------------------------------------
 
-PKG_CHECK_MODULES(PUGIXML, pugixml, AC_DEFINE(HAVE_PUGIXML),AC_MSG_ERROR(pugixml is required))
+PKG_CHECK_MODULES(PUGIXML, pugixml, AC_DEFINE(HAVE_PUGIXML,[],[Do we have pugixml]),AC_MSG_ERROR(pugixml is required))
 
 AC_SUBST(PUGIXML_LIBS)
 AC_SUBST(PUGIXML_CFLAGS)
@@ -176,7 +176,7 @@ AC_SUBST(PUGIXML_CFLAGS)
 dnl ---------------------------------------------------------------------------
 dnl Test for jsoncpp
 dnl ---------------------------------------------------------------------------
-PKG_CHECK_MODULES( [JSONCPP], [jsoncpp], AC_DEFINE(HAVE_JSONCPP), AC_MSG_ERROR([libjsoncpp not present.]) )
+PKG_CHECK_MODULES( [JSONCPP], [jsoncpp], AC_DEFINE(HAVE_JSONCPP,[],[Do we have jsoncpp]), AC_MSG_ERROR([libjsoncpp not present.]) )
 
 AC_SUBST(JSONCPP_LIBS)
 AC_SUBST(JSONCPP_CFLAGS)

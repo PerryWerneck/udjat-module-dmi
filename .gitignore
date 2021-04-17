@@ -44,6 +44,8 @@
 Makefile
 aclocal.m4
 autom4te.cache
+stamp-h1
+config.h
 *.log
 *.status
 configure
