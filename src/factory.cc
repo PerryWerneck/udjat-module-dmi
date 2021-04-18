@@ -17,10 +17,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+ #include "config.h"
  #include "private.h"
 
  Udjat::DMI::Factory::Factory() : Abstract::Agent::Factory(Quark("dmi")) {
 	cout << "DMI\tAgent factory is active" << endl;
+
+	static const Udjat::ModuleInfo info = {
+
+		PACKAGE_NAME,			// The module name.
+		"DMI Agent factory", 	// The module description.
+		PACKAGE_VERSION, 		// The module version.
+		PACKAGE_BUGREPORT, 		// The bugreport address.
+		PACKAGE_URL, 			// The package URL.
+		nullptr
+	};
+
+	this->info = &info;
+
  }
 
  Udjat::DMI::Factory::~Factory() {

@@ -65,7 +65,7 @@ namespace Udjat {
 			Factory smbios;
 
 		public:
-			Controller(void *handle);
+			Controller();
 			virtual ~Controller();
 
 			static Controller & getInstance();

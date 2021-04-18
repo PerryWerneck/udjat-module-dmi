@@ -22,7 +22,7 @@
 
  Udjat::DMI::Controller * Udjat::DMI::Controller::instance = nullptr;
 
- Udjat::DMI::Controller::Controller(void *handle) : Udjat::Module(Quark("DMI"),handle) {
+ Udjat::DMI::Controller::Controller() : Udjat::Module(Quark("DMI")) {
 
 	static const Udjat::ModuleInfo info = {
 
@@ -31,7 +31,7 @@
 		PACKAGE_VERSION, 	// The module version.
 		PACKAGE_BUGREPORT, 	// The bugreport address.
 		PACKAGE_URL, 		// The package URL.
-
+		nullptr
 	};
 
 	this->info = &info;

@@ -20,6 +20,6 @@
 #include "private.h"
 
 /// @brief Register udjat module.
-Udjat::Module * udjat_module_init(void *handle) {
-	return new Udjat::DMI::Controller(handle);
+Udjat::Module * udjat_module_init() {
+	return new Udjat::DMI::Controller();
 }
