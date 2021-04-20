@@ -24,14 +24,12 @@
 
  Udjat::DMI::Controller::Controller() : Udjat::Module(Quark("DMI")) {
 
-	static const Udjat::ModuleInfo info = {
-
+	static const Udjat::ModuleInfo info{
 		PACKAGE_NAME,		// The module name.
 		"DMI Agent", 		// The module description.
 		PACKAGE_VERSION, 	// The module version.
 		PACKAGE_BUGREPORT, 	// The bugreport address.
-		PACKAGE_URL, 		// The package URL.
-		nullptr
+		PACKAGE_URL 		// The package URL.
 	};
 
 	this->info = &info;
