@@ -177,6 +177,8 @@
 		}
 	}
 
+	load(node);
+
 #ifdef DEBUG
 	cout << "DMI\tID is " << to_string((int) this->id[0]) << "-" << to_string((int) this->id[1]) << "-" << to_string((int) this->id[2]) << endl;
 #endif // DEBUG

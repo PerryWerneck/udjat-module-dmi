@@ -22,6 +22,7 @@
 #include <udjat/defs.h>
 #include <udjat/module.h>
 #include <udjat/agent.h>
+#include <udjat/factory.h>
 #include <stdexcept>
 
 using namespace std;
@@ -32,7 +33,7 @@ namespace Udjat {
 	namespace DMI {
 
 		/// @brief SMBIOS read agent.
-		class Factory : public Abstract::Agent::Factory {
+		class Factory : public Udjat::Factory {
 		private:
 
 		public:

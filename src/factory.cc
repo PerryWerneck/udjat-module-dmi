@@ -20,7 +20,8 @@
  #include "config.h"
  #include "private.h"
 
- Udjat::DMI::Factory::Factory() : Abstract::Agent::Factory(Quark("dmi")) {
+ Udjat::DMI::Factory::Factory() : Udjat::Factory(Quark::getFromStatic("dmi")) {
+
 	cout << "DMI\tAgent factory is active" << endl;
 
 	static const Udjat::ModuleInfo info = {
@@ -41,11 +42,13 @@
 	cout << "DMI\tAgent factory is inactive" << endl;
  }
 
+
  void Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
 #ifdef DEBUG
 	cout << "DMI\tParsing DMI agent factory" << endl;
 #endif // DEBUG
 
-	setup(parent, node, make_shared<Agent>(node));
+	parent.insert(make_shared<Agent>(node));
+
  }
 
