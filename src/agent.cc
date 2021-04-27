@@ -180,7 +180,9 @@
 	load(node);
 
 #ifdef DEBUG
-	cout << "DMI\tID is " << to_string((int) this->id[0]) << "-" << to_string((int) this->id[1]) << "-" << to_string((int) this->id[2]) << endl;
+	cout << "DMI\tID is " 	<< std::to_string((int) this->id[0])
+							<< "-" << std::to_string((int) this->id[1]) << "-"
+							<< std::to_string((int) this->id[2]) << endl;
 #endif // DEBUG
 
 
@@ -224,9 +226,9 @@
 	string path{dmipath};
 
 	path += "entries/";
-	path += to_string((unsigned int) id[0]);
+	path += std::to_string((unsigned int) id[0]);
 	path += "-";
-	path += to_string((unsigned int) id[1]);
+	path += std::to_string((unsigned int) id[1]);
 	path += "/";
 
 	// Get header length
