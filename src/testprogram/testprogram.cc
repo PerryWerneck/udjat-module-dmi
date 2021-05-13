@@ -31,7 +31,7 @@
 
 int main(int argc, char **argv) {
 
-	Logger::redirect();
+	// Logger::redirect();
 
 	auto module = udjat_module_init();
 
@@ -47,7 +47,8 @@ int main(int argc, char **argv) {
 
 	{
 		Response response;
-		Worker::work("agent",Request("/sample"),response);
+		Request request("/sample");
+		Worker::work("agent",request,response);
 		cout << response.toStyledString() << endl;
 	}
 
