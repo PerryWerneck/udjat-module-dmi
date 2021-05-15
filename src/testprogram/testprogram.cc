@@ -35,15 +35,11 @@ int main(int argc, char **argv) {
 
 	auto module = udjat_module_init();
 
-	auto root_agent = Abstract::Agent::set_root(make_shared<Abstract::Agent>("root","System","Application"));
-
 	{
 		pugi::xml_document doc;
 		doc.load_file("test.xml");
-		root_agent->load(doc);
+		Abstract::Agent::set_root(make_shared<Abstract::Agent>("root","System","Application"))->load(doc);
 	}
-
-	Udjat::start();
 
 	{
 		Response response;
@@ -60,7 +56,7 @@ int main(int argc, char **argv) {
 	}
 	*/
 
-	Udjat::stop();
+	Udjat::run();
 
 	delete module;
 	return 0;

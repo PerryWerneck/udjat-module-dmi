@@ -22,17 +22,15 @@
 
  Udjat::DMI::Controller * Udjat::DMI::Controller::instance = nullptr;
 
- Udjat::DMI::Controller::Controller() : Udjat::Module(Quark("DMI")) {
+ static const Udjat::ModuleInfo moduleinfo{
+	PACKAGE_NAME,		// The module name.
+	"DMI Agent", 		// The module description.
+	PACKAGE_VERSION, 	// The module version.
+	PACKAGE_BUGREPORT, 	// The bugreport address.
+	PACKAGE_URL 		// The package URL.
+ };
 
-	static const Udjat::ModuleInfo info{
-		PACKAGE_NAME,		// The module name.
-		"DMI Agent", 		// The module description.
-		PACKAGE_VERSION, 	// The module version.
-		PACKAGE_BUGREPORT, 	// The bugreport address.
-		PACKAGE_URL 		// The package URL.
-	};
-
-	this->info = &info;
+ Udjat::DMI::Controller::Controller() : Udjat::Module(Quark("DMI"),&moduleinfo) {
 	instance = this;
  }
 

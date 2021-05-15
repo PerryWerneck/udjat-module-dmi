@@ -20,20 +20,16 @@
  #include "config.h"
  #include "private.h"
 
- Udjat::DMI::Factory::Factory() : Udjat::Factory(Quark::getFromStatic("dmi")) {
+ static const Udjat::ModuleInfo moduleinfo{
+	PACKAGE_NAME,			// The module name.
+	"DMI Agent factory", 	// The module description.
+	PACKAGE_VERSION, 		// The module version.
+	PACKAGE_BUGREPORT, 		// The bugreport address.
+	PACKAGE_URL 			// The package URL.
+ };
 
+ Udjat::DMI::Factory::Factory() : Udjat::Factory(Quark::getFromStatic("dmi"),&moduleinfo) {
 	cout << "DMI\tAgent factory is active" << endl;
-
-	static const Udjat::ModuleInfo info{
-		PACKAGE_NAME,			// The module name.
-		"DMI Agent factory", 	// The module description.
-		PACKAGE_VERSION, 		// The module version.
-		PACKAGE_BUGREPORT, 		// The bugreport address.
-		PACKAGE_URL 			// The package URL.
-	};
-
-	this->info = &info;
-
  }
 
  Udjat::DMI::Factory::~Factory() {
