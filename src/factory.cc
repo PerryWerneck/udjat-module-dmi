@@ -28,7 +28,7 @@
 	PACKAGE_URL 			// The package URL.
  };
 
- Udjat::DMI::Factory::Factory() : Udjat::Factory(Quark::getFromStatic("dmi"),&moduleinfo) {
+ Udjat::DMI::Factory::Factory() : Udjat::Factory("dmi",&moduleinfo) {
 	cout << "DMI\tAgent factory is active" << endl;
  }
 

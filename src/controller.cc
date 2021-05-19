@@ -30,7 +30,7 @@
 	PACKAGE_URL 		// The package URL.
  };
 
- Udjat::DMI::Controller::Controller() : Udjat::Module(Quark("DMI"),&moduleinfo) {
+ Udjat::DMI::Controller::Controller() : Udjat::Module("DMI",&moduleinfo) {
 	instance = this;
  }
 
