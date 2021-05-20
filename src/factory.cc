@@ -29,20 +29,12 @@
  };
 
  Udjat::DMI::Factory::Factory() : Udjat::Factory("dmi",&moduleinfo) {
-	cout << "DMI\tAgent factory is active" << endl;
  }
 
  Udjat::DMI::Factory::~Factory() {
-	cout << "DMI\tAgent factory is inactive" << endl;
  }
 
-
  void Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
-#ifdef DEBUG
-	cout << "DMI\tParsing DMI agent factory" << endl;
-#endif // DEBUG
-
 	parent.insert(make_shared<Agent>(node));
-
  }
 

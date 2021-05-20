@@ -239,7 +239,7 @@
 
  	} catch(const exception &e) {
 
-		failed(e,"Cant get DMI header length");
+		failed("Error getting DMI header length",e);
 		throw;
  	}
 
@@ -267,7 +267,7 @@
 
  	} catch(const exception &e) {
 
-		failed(e,"Cant read raw DMI info");
+		failed("Cant read raw DMI info",e);
 		throw;
  	}
 
