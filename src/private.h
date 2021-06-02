@@ -41,6 +41,7 @@ namespace Udjat {
 			virtual ~Factory();
 
 			void parse(Abstract::Agent &parent, const pugi::xml_node &node) const override;
+			std::shared_ptr<Abstract::Agent> factory(const char *id) const;
 
 		};
 
@@ -50,6 +51,7 @@ namespace Udjat {
 			uint8_t id[3];
 
 		public:
+			Agent(const char *id);
 			Agent(const pugi::xml_node &node);
 			virtual ~Agent();
 

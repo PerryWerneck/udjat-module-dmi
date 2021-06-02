@@ -88,10 +88,7 @@
 	Type{"TPM Device"},
  };
 
-
  #define type_length (sizeof(types)/sizeof(type[0]))
-
-
 
  static bool isNumber(const char *str) {
  	for(const char *ptr = str;*ptr;ptr++) {
@@ -121,18 +118,51 @@
 
  }
 
- Udjat::DMI::Agent::Agent(const pugi::xml_node &node) {
+ Udjat::DMI::Agent::Agent(const char *id) : Abstract::Agent("dmi") {
+
+	// Reset
+	this->id[0] = this->id[1] = this->id[2] = 0;
+
+	string indexes[3];
+
+	for(size_t ix=0; ix<3 && *id; ix++) {
+
+		const char *next = strchr(id,'.');
+		if(!next) {
+			indexes[ix] = id;
+			break;
+		}
+
+		indexes[ix] = string(id,next-id);
+		id = next+1;
+	}
 
 #ifdef DEBUG
-	cout << "DMI\tCreating agent " << node.attribute("name").as_string() << endl;
+	cout	<< "I[0]= '" << indexes[0] << "'" << endl
+			<< "I[1]= '" << indexes[1] << "'" << endl
+			<< "I[2]= '" << indexes[2] << "'" << endl;
 #endif // DEBUG
 
+	// Check for the first element.
+	if(indexes[0].empty()) {
+		return;
+	}
+
+	this->id[0] = ::Type::indexByName(indexes[0].c_str());
+	this->id[1] = (uint8_t) stoi(indexes[1]);
+	this->id[2] = (uint8_t) stoi(indexes[2]);
+
+ }
+
+ Udjat::DMI::Agent::Agent(const pugi::xml_node &node) : Agent(node.attribute("id").as_string()) {
+
+	/*
 	// Reset
 	id[0] = id[1] = id[2] = 0;
 
 	// Check if the entry has an ID in the format type-instance-field
 	{
-		const char * id = node.attribute("id").as_string();
+		const char * id = ;
 		if(id && *id) {
 
 			// Split id.
@@ -176,15 +206,9 @@
 			id[2] = index.as_uint(id[2]);
 		}
 	}
+	*/
 
 	load(node);
-
-#ifdef DEBUG
-	cout << "DMI\tID is " 	<< std::to_string((int) this->id[0])
-							<< "-" << std::to_string((int) this->id[1]) << "-"
-							<< std::to_string((int) this->id[2]) << endl;
-#endif // DEBUG
-
 
  }
 

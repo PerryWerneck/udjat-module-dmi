@@ -2,8 +2,6 @@
 
 <config>
 
-	<dmi name='sample' type='bios' instance='0' string-index='2'>
-
-	</dmi>
+	<dmi name='sample' id='bios.0.2' />
 
 </config>

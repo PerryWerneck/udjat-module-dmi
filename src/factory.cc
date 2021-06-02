@@ -38,3 +38,7 @@
 	parent.insert(make_shared<Agent>(node));
  }
 
+ std::shared_ptr<Abstract::Agent> Udjat::DMI::Factory::factory(const char *id) const {
+	return make_shared<Agent>(id);
+ }
+
