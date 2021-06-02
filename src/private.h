@@ -57,6 +57,8 @@ namespace Udjat {
 
 			void get(const char *name, Json::Value &value) override;
 
+			std::string to_string() const override;
+
 		};
 
 		/// @brief DMI module controller.

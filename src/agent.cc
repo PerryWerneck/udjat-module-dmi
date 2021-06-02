@@ -156,58 +156,6 @@
 
  Udjat::DMI::Agent::Agent(const pugi::xml_node &node) : Agent(node.attribute("id").as_string()) {
 
-	/*
-	// Reset
-	id[0] = id[1] = id[2] = 0;
-
-	// Check if the entry has an ID in the format type-instance-field
-	{
-		const char * id = ;
-		if(id && *id) {
-
-			// Split id.
-			const char *first = id;
-			for(size_t index = 0; index < 3; index++) {
-				const char *last = strchr(first,'-');
-				if(last) {
-					this->id[index] = atoi(string(first,last-first).c_str());
-				} else {
-					this->id[index] = atoi(first);
-					break;
-				}
-
-				first = last+1;
-			}
-
-		}
-
-	}
-
-	// Check for type attribute
-	{
-		auto type = node.attribute("type");
-		if(type) {
-			id[0] = ::Type::indexByName(type.as_string());
-		}
-	}
-
-	// Check for instance attribute
-	{
-		auto instance = node.attribute("instance");
-		if(instance) {
-			id[1] = instance.as_uint(id[1]);
-		}
-	}
-
-	// Get index
-	{
-		auto index = node.attribute("string-index");
-		if(index) {
-			id[2] = index.as_uint(id[2]);
-		}
-	}
-	*/
-
 	load(node);
 
  }
@@ -242,6 +190,10 @@
  }
 
  void Udjat::DMI::Agent::get(const char *name, Json::Value &value){
+	value[name] = this->to_string();
+ }
+
+ std::string Udjat::DMI::Agent::to_string() const {
 
 	char buffer[4096];
 	size_t offset = 0;
@@ -263,10 +215,10 @@
 
  	} catch(const exception &e) {
 
-		failed("Error getting DMI header length",e);
-		throw;
- 	}
+		error("Error '{}' getting DMI header length",e.what());
+		return "";
 
+ 	}
 
  	// Read DMI Strings
  	try {
@@ -277,22 +229,25 @@
 		size_t ix = (size_t) id[2];
 		while(ix-- > 0) {
 
+#ifdef DEBUG
 			cout << "ix=" << ix << " text='" << text << "'" << endl;
+#endif // DEBUG
 
 			if(!*text) {
-				throw runtime_error("Can't find required string");
+				cerr << getName() << "\tCan't find required string" << endl;
+				return "";
 			}
 
 			text += strlen(text)+1;
 
 		}
 
-		value[name] = text;
+		return text;
 
  	} catch(const exception &e) {
 
-		failed("Cant read raw DMI info",e);
-		throw;
+		error("Error '{}' reading raw DMI info",e.what());
+		return "";
  	}
 
  }
