@@ -46,7 +46,7 @@ namespace Udjat {
 		};
 
 		/// @brief
-		class Agent : public Udjat::Abstract::Agent {
+		class UDJAT_API Agent : public Udjat::Abstract::Agent {
 		private:
 			uint8_t id[3];
 

@@ -29,20 +29,41 @@
 
 //---[ Implement ]------------------------------------------------------------------------------------------
 
+static void test_agent_parser() {
+
+	Abstract::Agent::init("test.xml");
+
+	Udjat::run();
+
+	Abstract::Agent::deinit();
+
+}
+
 int main(int argc, char **argv) {
 
 	// Logger::redirect();
 
 	auto module = udjat_module_init();
 
-	Abstract::Agent::init("test.xml");
+	{
+		cout << "------------------------------" << endl;
 
+		// cout << DMI::Agent("1.0.0").to_string() << endl;
+		cout << DMI::Agent("1.0.1").to_string() << endl;
+		cout << DMI::Agent("1.0.2").to_string() << endl;
+
+		cout << "------------------------------" << endl;
+
+	}
+
+	/*
 	{
 		Response response;
 		Request request("/sample");
 		Worker::work("agent",request,response);
 		cout << response.toStyledString() << endl;
 	}
+	*/
 
 	/*
 	{
@@ -52,10 +73,6 @@ int main(int argc, char **argv) {
 	}
 	*/
 
-	Udjat::run();
-
-
-	Abstract::Agent::deinit();
 	delete module;
 
 	return 0;
