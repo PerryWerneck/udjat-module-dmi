@@ -176,11 +176,11 @@ AC_SUBST(PUGIXML_CFLAGS)
 dnl ---------------------------------------------------------------------------
 dnl Test for jsoncpp
 dnl ---------------------------------------------------------------------------
-PKG_CHECK_MODULES( [JSONCPP], [jsoncpp], AC_DEFINE(HAVE_JSONCPP,[],[Do we have jsoncpp]), AC_MSG_ERROR([libjsoncpp not present.]) )
-
-AC_SUBST(JSONCPP_LIBS)
-AC_SUBST(JSONCPP_CFLAGS)
-
+dnl PKG_CHECK_MODULES( [JSONCPP], [jsoncpp], AC_DEFINE(HAVE_JSONCPP,[],[Do we have jsoncpp]), AC_MSG_ERROR([libjsoncpp not present.]) )
+dnl 
+dnl AC_SUBST(JSONCPP_LIBS)
+dnl AC_SUBST(JSONCPP_CFLAGS)
+dnl 
 dnl ---------------------------------------------------------------------------
 dnl Output config
 dnl ---------------------------------------------------------------------------

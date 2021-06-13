@@ -55,7 +55,7 @@ namespace Udjat {
 			Agent(const pugi::xml_node &node);
 			virtual ~Agent();
 
-			void get(const char *name, Json::Value &value) override;
+			Udjat::Value & get(Udjat::Value &value) override;
 
 			std::string to_string() const override;
 

@@ -189,8 +189,9 @@
 
  }
 
- void Udjat::DMI::Agent::get(const char *name, Json::Value &value){
-	value[name] = this->to_string();
+ Udjat::Value & Udjat::DMI::Agent::get(Udjat::Value &value){
+	value = this->to_string();
+	return value;
  }
 
  std::string Udjat::DMI::Agent::to_string() const {
