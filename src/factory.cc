@@ -34,8 +34,9 @@
  Udjat::DMI::Factory::~Factory() {
  }
 
- void Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
+ bool Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
 	parent.insert(make_shared<Agent>(node));
+	return true;
  }
 
  std::shared_ptr<Abstract::Agent> Udjat::DMI::Factory::factory(const char *id) const {
