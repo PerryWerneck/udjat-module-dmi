@@ -177,7 +177,7 @@ dnl ---------------------------------------------------------------------------
 dnl test for dmiget
 dnl ---------------------------------------------------------------------------
 
-PKG_CHECK_MODULES(DMIGET, libdmiget, AC_DEFINE(HAVE_DMIGET,[],[Do we have libdmiget]),AC_MSG_ERROR(libdmiget is required))
+PKG_CHECK_MODULES(DMIGET, dmiget, AC_DEFINE(HAVE_DMIGET,[],[Do we have libdmiget]),AC_MSG_ERROR(libdmiget is required))
 
 AC_SUBST(DMIGET_LIBS)
 AC_SUBST(DMIGET_CFLAGS)

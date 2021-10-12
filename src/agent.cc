@@ -30,11 +30,29 @@
  #include <udjat/tools/quark.h>
  #include <cstring>
  #include <dmiget/table.h>
+ #include <dmiget/value.h>
 
  Udjat::DMI::Agent::Agent(const char *u) : url(Quark(u).c_str()) {
+
+	try {
+
+		auto value = ::DMI::Table().find(this->url);
+		if(value) {
+			this->label = Quark(value->name()).c_str();
+			this->summary = Quark(value->description()).c_str();
+		} else {
+			warning("Query for '{}' returned an empty response",this->url);
+		}
+
+	} catch(const std::exception &e) {
+
+		error("{}: '{}'",this->url,e.what());
+
+	}
+
  }
 
- Udjat::DMI::Agent::Agent(const pugi::xml_node &node) : url(Quark(node,"url").c_str()) {
+ Udjat::DMI::Agent::Agent(const pugi::xml_node &node) : Agent(node.attribute("url").as_string()) {
 	load(node);
  }
 
