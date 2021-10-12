@@ -21,6 +21,7 @@
 
 #include <udjat/defs.h>
 #include <udjat/module.h>
+#include <udjat/url.h>
 #include <udjat/agent.h>
 #include <udjat/factory.h>
 #include <stdexcept>
@@ -31,6 +32,8 @@ using namespace Udjat;
 namespace Udjat {
 
 	namespace DMI {
+
+		extern const ::Udjat::ModuleInfo moduleinfo;
 
 		/// @brief SMBIOS read agent.
 		class Factory : public Udjat::Factory {
@@ -45,19 +48,27 @@ namespace Udjat {
 
 		};
 
-		/// @brief
+		/// @brief DMI Agent.
 		class UDJAT_API Agent : public Udjat::Abstract::Agent {
 		private:
-			uint8_t id[3];
+			const char *url = nullptr;
 
 		public:
-			Agent(const char *id);
+			Agent(const char *url);
 			Agent(const pugi::xml_node &node);
 			virtual ~Agent();
 
 			Udjat::Value & get(Udjat::Value &value) override;
 
 			std::string to_string() const override;
+
+		};
+
+		/// @brief DMI:// protocol handler
+		class Protocol : public Udjat::URL::Protocol {
+		public:
+			Protocol();
+			std::shared_ptr<URL::Response> call(const URL &url, const URL::Method method, const char *mimetype, const char *payload) override;
 
 		};
 

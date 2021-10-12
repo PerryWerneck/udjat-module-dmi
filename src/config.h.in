@@ -1,5 +1,8 @@
 /* src/config.h.in.  Generated from configure.ac by autoheader.  */
 
+/* Do we have libdmiget */
+#undef HAVE_DMIGET
+
 /* Do we have econf */
 #undef HAVE_ECONF
 
