@@ -19,30 +19,33 @@
 
  #include "config.h"
  #include "private.h"
+ #include <dmiget/table.h>
 
- Udjat::DMI::Controller * Udjat::DMI::Controller::instance = nullptr;
+ Udjat::DMI::Protocol::Protocol() : Udjat::URL::Protocol("dmi","",&moduleinfo) {
 
- const Udjat::ModuleInfo Udjat::DMI::moduleinfo{
-	PACKAGE_NAME,				// The module name.
-	"DMI Reader Module", 		// The module description.
-	PACKAGE_VERSION, 			// The module version.
-	PACKAGE_BUGREPORT, 			// The bugreport address.
-	PACKAGE_URL 				// The package URL.
- };
-
- Udjat::DMI::Controller::Controller() : Udjat::Module("DMI",&moduleinfo) {
-	instance = this;
  }
 
- Udjat::DMI::Controller::~Controller() {
-	cout << "DMI\tModule unloaded" << endl;
-	instance = nullptr;
- }
+ std::shared_ptr<Udjat::URL::Response> Udjat::DMI::Protocol::call(const URL &url, const Udjat::URL::Method method, const char *mimetype, const char *payload) {
 
- Udjat::DMI::Controller & Udjat::DMI::Controller::getInstance() {
-	if(!instance) {
-		throw runtime_error("DMI Controller is not available");
+	class Response : public Udjat::URL::Response {
+	private:
+		std::string value;
+
+	public:
+		Response(const char *str) : value(str) {
+			response.payload = value.c_str();
+			response.length = value.size();
+		}
+
+	};
+
+	if(method != Udjat::URL::Method::Get) {
+		throw runtime_error("Invalid or unsupported request method");
 	}
-	return *instance;
+
+	string key{"dmi:/"};
+	key += url.getFileName();
+
+	return make_shared<Response>(::DMI::Table()[key.c_str()].c_str());
  }
 
