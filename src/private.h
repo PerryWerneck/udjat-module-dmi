@@ -45,13 +45,13 @@ namespace Udjat {
 
 		};
 
-		/// @brief
+		/// @brief DMI Agent.
 		class UDJAT_API Agent : public Udjat::Abstract::Agent {
 		private:
-			uint8_t id[3];
+			const char *url = nullptr;
 
 		public:
-			Agent(const char *id);
+			Agent(const char *url);
 			Agent(const pugi::xml_node &node);
 			virtual ~Agent();
 

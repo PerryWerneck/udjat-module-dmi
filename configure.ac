@@ -174,13 +174,14 @@ AC_SUBST(PUGIXML_LIBS)
 AC_SUBST(PUGIXML_CFLAGS)
 
 dnl ---------------------------------------------------------------------------
-dnl Test for jsoncpp
+dnl test for dmiget
 dnl ---------------------------------------------------------------------------
-dnl PKG_CHECK_MODULES( [JSONCPP], [jsoncpp], AC_DEFINE(HAVE_JSONCPP,[],[Do we have jsoncpp]), AC_MSG_ERROR([libjsoncpp not present.]) )
-dnl 
-dnl AC_SUBST(JSONCPP_LIBS)
-dnl AC_SUBST(JSONCPP_CFLAGS)
-dnl 
+
+PKG_CHECK_MODULES(DMIGET, libdmiget, AC_DEFINE(HAVE_DMIGET,[],[Do we have libdmiget]),AC_MSG_ERROR(libdmiget is required))
+
+AC_SUBST(DMIGET_LIBS)
+AC_SUBST(DMIGET_CFLAGS)
+
 dnl ---------------------------------------------------------------------------
 dnl Output config
 dnl ---------------------------------------------------------------------------

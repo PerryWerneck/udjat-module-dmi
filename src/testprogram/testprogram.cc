@@ -17,63 +17,46 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
- #include "../private.h"
  #include <udjat.h>
  #include <udjat/module.h>
- #include <udjat/tools/logger.h>
- #include <udjat/worker.h>
- #include <pugixml.hpp>
+ #include <unistd.h>
+ #include <udjat/tools/systemservice.h>
 
  using namespace std;
  using namespace Udjat;
 
-//---[ Implement ]------------------------------------------------------------------------------------------
+ int main(int argc, char **argv) {
 
-static void test_agent_parser() {
+	setlocale( LC_ALL, "" );
 
-	Abstract::Agent::init("test.xml");
+	Logger::redirect(nullptr,true);
 
-	Udjat::run();
+	auto module = udjat_module_init();
+	auto agent = Abstract::Agent::init("./test.xml");
+
+	try {
+
+		Module::load("http");
+
+		for(auto child : *agent) {
+			cout << "http://localhost:8989/api/1.0/agent/" << child->getName() << ".xml" << endl;
+		}
+
+	} catch(const std::exception &e) {
+
+		cerr << e.what() << endl;
+
+	}
+
+	cout << "Waiting for requests" << endl;
+
+	Udjat::SystemService().run();
 
 	Abstract::Agent::deinit();
 
-}
-
-int main(int argc, char **argv) {
-
-	// Logger::redirect();
-
-	auto module = udjat_module_init();
-
-	{
-		cout << "------------------------------" << endl;
-
-		// cout << DMI::Agent("1.0.0").to_string() << endl;
-		cout << DMI::Agent("1.0.1").to_string() << endl;
-		cout << DMI::Agent("1.0.2").to_string() << endl;
-
-		cout << "------------------------------" << endl;
-
-	}
-
-	/*
-	{
-		Response response;
-		Request request("/sample");
-		Worker::work("agent",request,response);
-		cout << response.toStyledString() << endl;
-	}
-	*/
-
-	/*
-	{
-		Json::Value response(Json::objectValue);
-		root_agent->get(response,true,true);
-		cout << response.toStyledString() << endl;
-	}
-	*/
-
+	cout << "Removing module" << endl;
 	delete module;
+	Module::unload();
 
 	return 0;
 }

@@ -2,6 +2,7 @@
 
 <config>
 
-	<dmi name='sample' id='bios.0.2' />
+	<dmi name='sample' url='dmi://bios/vendor' />
 
 </config>
+
