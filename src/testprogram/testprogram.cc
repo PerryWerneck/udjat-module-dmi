@@ -20,8 +20,8 @@
  #include <udjat.h>
  #include <udjat/module.h>
  #include <unistd.h>
- #include <udjat/tools/systemservice.h>
- #include <udjat/url.h>
+ #include <udjat/tools/mainloop.h>
+ #include <udjat/tools/url.h>
 
  using namespace std;
  using namespace Udjat;
@@ -68,7 +68,7 @@
 
 	cout << "Waiting for requests" << endl;
 
-	Udjat::SystemService().run();
+	Udjat::MainLoop::getInstance().run();
 
 	Abstract::Agent::deinit();
 

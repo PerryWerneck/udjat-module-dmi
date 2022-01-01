@@ -21,7 +21,7 @@
 
 #include <udjat/defs.h>
 #include <udjat/module.h>
-#include <udjat/url.h>
+#include <udjat/tools/url.h>
 #include <udjat/agent.h>
 #include <udjat/factory.h>
 #include <stdexcept>
