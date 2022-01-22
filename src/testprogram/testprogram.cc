@@ -37,7 +37,7 @@
 
 	try {
 
-		Module::load("udjat-module-information");
+		Module::load("udjat-module-information",false);
 
 	} catch(const std::exception &e) {
 		cerr << "Error '" << e.what() << "' loading information module" << endl;
@@ -45,7 +45,7 @@
 
 	try {
 
-		Module::load("http");
+		Module::load("http",false);
 
 		cout << "http://localhost:8989/api/1.0/info/modules.xml" << endl;
 		cout << "http://localhost:8989/api/1.0/info/protocols.xml" << endl;
@@ -60,7 +60,7 @@
 
 	try {
 
-		cout << "dmi:///bios/version= '" << Udjat::URL("dmi:///bios/version").get()->c_str() << "'" << endl;
+		cout << "dmi:///bios/version= '" << Udjat::URL("dmi:///bios/version").get().c_str() << "'" << endl;
 
 	} catch(const std::exception &e) {
 		cerr << e.what() << endl;

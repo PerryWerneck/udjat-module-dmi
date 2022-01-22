@@ -22,6 +22,7 @@
 #include <udjat/defs.h>
 #include <udjat/module.h>
 #include <udjat/tools/url.h>
+#include <udjat/tools/protocol.h>
 #include <udjat/agent.h>
 #include <udjat/factory.h>
 #include <stdexcept>
@@ -65,10 +66,10 @@ namespace Udjat {
 		};
 
 		/// @brief DMI:// protocol handler
-		class Protocol : public Udjat::URL::Protocol {
+		class Protocol : public Udjat::Protocol {
 		public:
 			Protocol();
-			std::shared_ptr<URL::Response> call(const URL &url, const URL::Method method, const char *mimetype, const char *payload) override;
+			std::string call(const URL &url, const HTTP::Method method, const char *payload) const override;
 
 		};
 

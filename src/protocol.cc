@@ -19,33 +19,15 @@
 
  #include "config.h"
  #include "private.h"
+ #include <udjat/tools/url.h>
  #include <dmiget/table.h>
 
- Udjat::DMI::Protocol::Protocol() : Udjat::URL::Protocol("dmi","",&moduleinfo) {
+ Udjat::DMI::Protocol::Protocol() : Udjat::Protocol("dmi",&moduleinfo) {
 
  }
 
- std::shared_ptr<Udjat::URL::Response> Udjat::DMI::Protocol::call(const URL &url, const Udjat::URL::Method method, const char *mimetype, const char *payload) {
-
-	class Response : public Udjat::URL::Response {
-	private:
-		std::string value;
-
-	public:
-		Response(const char *str) : value(str) {
-			response.payload = value.c_str();
-			response.length = value.size();
-		}
-
-	};
-
-	if(method != Udjat::URL::Method::Get) {
-		throw runtime_error("Invalid or unsupported request method");
-	}
-
-	string key{"dmi:/"};
-	key += url.getFileName();
-
-	return make_shared<Response>(::DMI::Table()[key.c_str()].c_str());
+ std::string Udjat::DMI::Protocol::call(const URL &url, const HTTP::Method method, const char *payload) const {
+	return ::DMI::Table()[url.c_str()];
  }
+
 
