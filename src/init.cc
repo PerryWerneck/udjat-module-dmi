@@ -21,6 +21,6 @@
 
 /// @brief Register udjat module.
 Udjat::Module * udjat_module_init() {
-	Udjat::URL::insert(std::make_shared<Udjat::DMI::Protocol>());
+	static Udjat::DMI::Protocol protocol;
 	return new Udjat::DMI::Controller();
 }
