@@ -50,4 +50,9 @@ config.h
 *.status
 configure
 scripts
+ABOUT-NLS
+intl
+m4
+po
+vgcore.*
 
