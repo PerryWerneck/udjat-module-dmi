@@ -32,29 +32,13 @@
 	Logger::redirect(nullptr,true);
 
 	auto module = udjat_module_init();
-	auto agent = Abstract::Agent::init("./test.xml");
+	auto agent = Udjat::init("./test.xml");
 
-	try {
+	cout << "http://localhost:8989/api/1.0/info/modules.xml" << endl;
+	cout << "http://localhost:8989/api/1.0/info/protocols.xml" << endl;
 
-		Module::load("udjat-module-information",false);
-
-	} catch(const std::exception &e) {
-		cerr << "Error '" << e.what() << "' loading information module" << endl;
-	}
-
-	try {
-
-		Module::load("http",false);
-
-		cout << "http://localhost:8989/api/1.0/info/modules.xml" << endl;
-		cout << "http://localhost:8989/api/1.0/info/protocols.xml" << endl;
-
-		for(auto child : *agent) {
-			cout << "http://localhost:8989/api/1.0/agent/" << child->getName() << ".xml" << endl;
-		}
-
-	} catch(const std::exception &e) {
-		cerr << e.what() << endl;
+	for(auto child : *agent) {
+		cout << "http://localhost:8989/api/1.0/agent/" << child->getName() << ".xml" << endl;
 	}
 
 	try {
