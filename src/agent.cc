@@ -38,15 +38,15 @@
 
 		auto value = ::DMI::Table().find(this->url);
 		if(value) {
-			this->label = Quark(value->name()).c_str();
-			this->summary = Quark(value->description()).c_str();
+			this->Object::properties.label = Quark(value->name()).c_str();
+			this->Object::properties.summary = Quark(value->description()).c_str();
 		} else {
-			warning("Query for '{}' returned an empty response",this->url);
+			warning() << "Query for '" << this->url << "' returned an empty response" << endl;
 		}
 
 	} catch(const std::exception &e) {
 
-		error("{}: '{}'",this->url,e.what());
+		error() << this->url << ": '" << e.what() << "'" << endl;
 
 	}
 

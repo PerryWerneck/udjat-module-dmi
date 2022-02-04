@@ -32,7 +32,7 @@
 	Logger::redirect(nullptr,true);
 
 	auto module = udjat_module_init();
-	auto agent = Udjat::init("./test.xml");
+	auto agent = Udjat::load("./test.xml");
 
 	if(Module::find("httpd")) {
 
@@ -40,7 +40,7 @@
 		cout << "http://localhost:8989/api/1.0/info/protocols.xml" << endl;
 
 		for(auto child : *agent) {
-			cout << "http://localhost:8989/api/1.0/agent/" << child->getName() << ".xml" << endl;
+			cout << "http://localhost:8989/api/1.0/agent/" << child->name() << ".xml" << endl;
 		}
 
 	}
