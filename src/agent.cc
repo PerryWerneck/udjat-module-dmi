@@ -59,7 +59,7 @@
  Udjat::DMI::Agent::~Agent() {
  }
 
- Udjat::Value & Udjat::DMI::Agent::get(Udjat::Value &value){
+ Udjat::Value & Udjat::DMI::Agent::get(Udjat::Value &value) const {
 	value = this->to_string();
 	return value;
  }
