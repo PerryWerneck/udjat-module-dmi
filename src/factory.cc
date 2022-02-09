@@ -19,16 +19,11 @@
 
  #include "config.h"
  #include "private.h"
+ #include <udjat/moduleinfo.h>
 
- static const Udjat::ModuleInfo moduleinfo{
-	PACKAGE_NAME,			// The module name.
-	"DMI Agent factory", 	// The module description.
-	PACKAGE_VERSION, 		// The module version.
-	PACKAGE_BUGREPORT, 		// The bugreport address.
-	PACKAGE_URL 			// The package URL.
- };
+ static const Udjat::ModuleInfo moduleinfo{"DMI Agent factory"};
 
- Udjat::DMI::Factory::Factory() : Udjat::Factory("dmi",&moduleinfo) {
+ Udjat::DMI::Factory::Factory() : Udjat::Factory("dmi",moduleinfo) {
  }
 
  Udjat::DMI::Factory::~Factory() {

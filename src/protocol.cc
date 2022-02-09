@@ -22,7 +22,7 @@
  #include <udjat/tools/url.h>
  #include <dmiget/table.h>
 
- Udjat::DMI::Protocol::Protocol() : Udjat::Protocol("dmi",&moduleinfo) {
+ Udjat::DMI::Protocol::Protocol() : Udjat::Protocol("dmi",moduleinfo) {
 
  }
 
