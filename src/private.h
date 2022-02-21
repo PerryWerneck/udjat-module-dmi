@@ -23,6 +23,7 @@
 #include <udjat/module.h>
 #include <udjat/tools/url.h>
 #include <udjat/tools/protocol.h>
+#include <udjat/tools/string.h>
 #include <udjat/agent.h>
 #include <udjat/factory.h>
 #include <stdexcept>
@@ -69,7 +70,7 @@ namespace Udjat {
 		class Protocol : public Udjat::Protocol {
 		public:
 			Protocol();
-			std::string call(const URL &url, const HTTP::Method method, const char *payload) const override;
+			Udjat::String call(const URL &url, const HTTP::Method method, const char *payload) const override;
 
 		};
 
