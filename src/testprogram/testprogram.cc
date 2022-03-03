@@ -19,6 +19,7 @@
 
  #include <udjat/module.h>
  #include <unistd.h>
+ #include <udjat/agent.h>
  #include <udjat/tools/mainloop.h>
  #include <udjat/tools/url.h>
 
@@ -32,7 +33,7 @@
 	Logger::redirect(true);
 
 	auto module = udjat_module_init();
-	Udjat::load("./test.xml");
+	Udjat::reconfigure("./test.xml");
 	auto agent = Abstract::Agent::root();
 
 	if(Module::find("httpd")) {
