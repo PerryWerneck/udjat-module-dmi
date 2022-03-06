@@ -36,7 +36,7 @@
 
 	try {
 
-		auto value = ::DMI::Table().find(this->url);
+		auto value = ::DMIget::Table().find(this->url);
 		if(value) {
 			this->Object::properties.label = Quark(value->name()).c_str();
 			this->Object::properties.summary = Quark(value->description()).c_str();
@@ -65,6 +65,6 @@
  }
 
  std::string Udjat::DMI::Agent::to_string() const {
-	return ::DMI::Table()[this->url];
+	return ::DMIget::Table()[this->url];
  }
 

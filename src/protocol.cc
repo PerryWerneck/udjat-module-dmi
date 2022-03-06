@@ -27,7 +27,7 @@
  }
 
  Udjat::String Udjat::DMI::Protocol::call(const URL &url, const HTTP::Method UDJAT_UNUSED(method), const char UDJAT_UNUSED(*payload)) const {
-	return Udjat::String(::DMI::Table()[url.c_str()].c_str());
+	return Udjat::String(::DMIget::Table()[url.c_str()].c_str());
  }
 
 
