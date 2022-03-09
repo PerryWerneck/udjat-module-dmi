@@ -33,7 +33,7 @@
 	Logger::redirect(true);
 
 	auto module = udjat_module_init();
-	Udjat::reconfigure("./test.xml");
+	Udjat::reconfigure("./test.xml",true);
 	auto agent = Abstract::Agent::root();
 
 	if(Module::find("httpd")) {
