@@ -21,6 +21,7 @@
  #include <unistd.h>
  #include <udjat/agent.h>
  #include <udjat/tools/mainloop.h>
+ #include <udjat/tools/logger.h>
  #include <udjat/tools/url.h>
 
  using namespace std;

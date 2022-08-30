@@ -53,7 +53,6 @@
  }
 
  Udjat::DMI::Agent::Agent(const pugi::xml_node &node) : Abstract::Agent(node), url(Quark(node.attribute("url").as_string()).c_str()) {
-	load(node);
  }
 
  Udjat::DMI::Agent::~Agent() {
