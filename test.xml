@@ -2,7 +2,7 @@
 
 <config>
 
-	<module name='httpd' required='no' />
+	<module name='civetweb' required='no' />
 	<module name='information' required='no' />
 
 	<dmi name='sample' url='dmi:///bios/vendor' />

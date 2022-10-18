@@ -63,7 +63,22 @@
 	return value;
  }
 
- std::string Udjat::DMI::Agent::to_string() const {
-	return ::DMIget::Table()[this->url];
+ std::string Udjat::DMI::Agent::to_string() const noexcept {
+
+ 	try {
+
+		return ::DMIget::Table()[this->url];
+
+ 	} catch(const std::exception &e) {
+
+ 		cerr << "dmi\tError '" << e.what() << "' getting " << this->url << endl;
+
+ 	} catch(...) {
+
+		cerr << "dmi\tUnexpected error getting " << this->url << endl;
+
+ 	}
+
+ 	return "";
  }
 

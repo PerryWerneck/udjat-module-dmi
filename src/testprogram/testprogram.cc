@@ -39,11 +39,10 @@
 
 	if(Module::find("httpd")) {
 
-		cout << "http://localhost:8989/api/1.0/info/modules.xml" << endl;
-		cout << "http://localhost:8989/api/1.0/info/protocols.xml" << endl;
+		Logger::trace() << "http://localhost:8989" << endl;
 
 		for(auto child : *agent) {
-			cout << "http://localhost:8989/api/1.0/agent/" << child->name() << ".xml" << endl;
+			Logger::trace() << "http://localhost:8989/api/1.0/agent/" << child->name() << ".xml" << endl;
 		}
 
 	}

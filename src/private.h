@@ -62,7 +62,7 @@ namespace Udjat {
 
 			Udjat::Value & get(Udjat::Value &value) const override;
 
-			std::string to_string() const override;
+			std::string to_string() const noexcept override;
 
 		};
 
