@@ -71,11 +71,11 @@
 
  	} catch(const std::exception &e) {
 
- 		cerr << "dmi\tError '" << e.what() << "' getting " << this->url << endl;
+ 		error() << "Error '" << e.what() << "' getting " << this->url << endl;
 
  	} catch(...) {
 
-		cerr << "dmi\tUnexpected error getting " << this->url << endl;
+		error() << "dmi\tUnexpected error getting " << this->url << endl;
 
  	}
 
