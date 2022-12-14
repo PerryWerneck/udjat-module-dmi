@@ -22,12 +22,12 @@
  #include <udjat/tools/url.h>
  #include <dmiget/table.h>
 
- Udjat::DMI::Protocol::Protocol() : Udjat::Protocol("dmi",&moduleinfo) {
+ Udjat::DMI::Protocol::Protocol() : Udjat::Protocol("dmi",moduleinfo) {
 
  }
 
- std::string Udjat::DMI::Protocol::call(const URL &url, const HTTP::Method method, const char *payload) const {
-	return ::DMI::Table()[url.c_str()];
+ Udjat::String Udjat::DMI::Protocol::call(const URL &url, const HTTP::Method UDJAT_UNUSED(method), const char UDJAT_UNUSED(*payload)) const {
+	return Udjat::String(::DMIget::Table()[url.c_str()].c_str());
  }
 
 

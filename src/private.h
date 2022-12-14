@@ -23,6 +23,7 @@
 #include <udjat/module.h>
 #include <udjat/tools/url.h>
 #include <udjat/tools/protocol.h>
+#include <udjat/tools/string.h>
 #include <udjat/agent.h>
 #include <udjat/factory.h>
 #include <stdexcept>
@@ -44,7 +45,7 @@ namespace Udjat {
 			Factory();
 			virtual ~Factory();
 
-			bool parse(Abstract::Agent &parent, const pugi::xml_node &node) const override;
+			std::shared_ptr<Abstract::Agent> AgentFactory(const Abstract::Object &parent, const pugi::xml_node &node) const override;
 			std::shared_ptr<Abstract::Agent> factory(const char *id) const;
 
 		};
@@ -59,9 +60,9 @@ namespace Udjat {
 			Agent(const pugi::xml_node &node);
 			virtual ~Agent();
 
-			Udjat::Value & get(Udjat::Value &value) override;
+			Udjat::Value & get(Udjat::Value &value) const override;
 
-			std::string to_string() const override;
+			std::string to_string() const noexcept override;
 
 		};
 
@@ -69,7 +70,7 @@ namespace Udjat {
 		class Protocol : public Udjat::Protocol {
 		public:
 			Protocol();
-			std::string call(const URL &url, const HTTP::Method method, const char *payload) const override;
+			Udjat::String call(const URL &url, const HTTP::Method method, const char *payload) const override;
 
 		};
 

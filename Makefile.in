@@ -151,9 +151,6 @@ $(BINRLS)/$(PACKAGE_NAME)@LIBEXT@: \
 #---[ Install Targets ]------------------------------------------------------------------
 
 install: \
-	install-@OSNAME@-module
-
-install-linux-module: \
 	$(BINRLS)/$(PACKAGE_NAME)@LIBEXT@
 
 	@$(MKDIR) \

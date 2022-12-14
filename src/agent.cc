@@ -36,35 +36,49 @@
 
 	try {
 
-		auto value = ::DMI::Table().find(this->url);
+		auto value = ::DMIget::Table().find(this->url);
 		if(value) {
-			this->label = Quark(value->name()).c_str();
-			this->summary = Quark(value->description()).c_str();
+			this->Object::properties.label = Quark(value->name()).c_str();
+			this->Object::properties.summary = Quark(value->description()).c_str();
 		} else {
-			warning("Query for '{}' returned an empty response",this->url);
+			warning() << "Query for '" << this->url << "' returned an empty response" << endl;
 		}
 
 	} catch(const std::exception &e) {
 
-		error("{}: '{}'",this->url,e.what());
+		error() << this->url << ": '" << e.what() << "'" << endl;
 
 	}
 
  }
 
- Udjat::DMI::Agent::Agent(const pugi::xml_node &node) : Agent(node.attribute("url").as_string()) {
-	load(node);
+ Udjat::DMI::Agent::Agent(const pugi::xml_node &node) : Abstract::Agent(node), url(Quark(node.attribute("url").as_string()).c_str()) {
  }
 
  Udjat::DMI::Agent::~Agent() {
  }
 
- Udjat::Value & Udjat::DMI::Agent::get(Udjat::Value &value){
+ Udjat::Value & Udjat::DMI::Agent::get(Udjat::Value &value) const {
 	value = this->to_string();
 	return value;
  }
 
- std::string Udjat::DMI::Agent::to_string() const {
-	return ::DMI::Table()[this->url];
+ std::string Udjat::DMI::Agent::to_string() const noexcept {
+
+ 	try {
+
+		return ::DMIget::Table()[this->url];
+
+ 	} catch(const std::exception &e) {
+
+ 		error() << "Error '" << e.what() << "' getting " << this->url << endl;
+
+ 	} catch(...) {
+
+		error() << "dmi\tUnexpected error getting " << this->url << endl;
+
+ 	}
+
+ 	return "";
  }
 

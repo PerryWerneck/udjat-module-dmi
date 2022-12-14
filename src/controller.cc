@@ -19,18 +19,13 @@
 
  #include "config.h"
  #include "private.h"
+ #include <udjat/moduleinfo.h>
 
  Udjat::DMI::Controller * Udjat::DMI::Controller::instance = nullptr;
 
- const Udjat::ModuleInfo Udjat::DMI::moduleinfo{
-	PACKAGE_NAME,				// The module name.
-	"DMI Reader Module", 		// The module description.
-	PACKAGE_VERSION, 			// The module version.
-	PACKAGE_BUGREPORT, 			// The bugreport address.
-	PACKAGE_URL 				// The package URL.
- };
+ const Udjat::ModuleInfo Udjat::DMI::moduleinfo{"DMI Access Module"};
 
- Udjat::DMI::Controller::Controller() : Udjat::Module("DMI",&moduleinfo) {
+ Udjat::DMI::Controller::Controller() : Udjat::Module("DMI",moduleinfo) {
 	instance = this;
  }
 

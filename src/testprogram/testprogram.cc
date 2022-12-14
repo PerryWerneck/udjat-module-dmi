@@ -19,7 +19,9 @@
 
  #include <udjat/module.h>
  #include <unistd.h>
+ #include <udjat/agent.h>
  #include <udjat/tools/mainloop.h>
+ #include <udjat/tools/logger.h>
  #include <udjat/tools/url.h>
 
  using namespace std;
@@ -29,16 +31,20 @@
 
 	setlocale( LC_ALL, "" );
 
-	Logger::redirect(nullptr,true);
+	Logger::redirect(true);
 
 	auto module = udjat_module_init();
-	auto agent = Udjat::init("./test.xml");
+	Udjat::reconfigure("./test.xml",true);
+	auto agent = Abstract::Agent::root();
 
-	cout << "http://localhost:8989/api/1.0/info/modules.xml" << endl;
-	cout << "http://localhost:8989/api/1.0/info/protocols.xml" << endl;
+	if(Module::find("httpd")) {
 
-	for(auto child : *agent) {
-		cout << "http://localhost:8989/api/1.0/agent/" << child->getName() << ".xml" << endl;
+		Logger::trace() << "http://localhost:8989" << endl;
+
+		for(auto child : *agent) {
+			Logger::trace() << "http://localhost:8989/api/1.0/agent/" << child->name() << ".xml" << endl;
+		}
+
 	}
 
 	try {

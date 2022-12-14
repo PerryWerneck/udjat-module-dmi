@@ -48,6 +48,7 @@ stamp-h1
 config.h
 *.log
 *.status
+*.cache
 configure
 scripts
 ABOUT-NLS

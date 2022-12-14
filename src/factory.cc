@@ -19,27 +19,25 @@
 
  #include "config.h"
  #include "private.h"
+ #include <udjat/moduleinfo.h>
 
- static const Udjat::ModuleInfo moduleinfo{
-	PACKAGE_NAME,			// The module name.
-	"DMI Agent factory", 	// The module description.
-	PACKAGE_VERSION, 		// The module version.
-	PACKAGE_BUGREPORT, 		// The bugreport address.
-	PACKAGE_URL 			// The package URL.
- };
+ namespace Udjat {
 
- Udjat::DMI::Factory::Factory() : Udjat::Factory("dmi",&moduleinfo) {
+	static const ModuleInfo moduleinfo{"DMI Agent factory"};
+
+	DMI::Factory::Factory() : Udjat::Factory("dmi",moduleinfo) {
+	}
+
+	DMI::Factory::~Factory() {
+	}
+
+	std::shared_ptr<Abstract::Agent> DMI::Factory::AgentFactory(const Abstract::Object UDJAT_UNUSED(&parent), const pugi::xml_node &node) const {
+		return make_shared<DMI::Agent>(node);
+	}
+
+	std::shared_ptr<Abstract::Agent> DMI::Factory::factory(const char *id) const {
+		return make_shared<DMI::Agent>(id);
+	}
+
+
  }
-
- Udjat::DMI::Factory::~Factory() {
- }
-
- bool Udjat::DMI::Factory::parse(Abstract::Agent &parent, const pugi::xml_node &node) const {
-	parent.insert(make_shared<Agent>(node));
-	return true;
- }
-
- std::shared_ptr<Abstract::Agent> Udjat::DMI::Factory::factory(const char *id) const {
-	return make_shared<Agent>(id);
- }
-

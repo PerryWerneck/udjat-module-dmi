@@ -5,7 +5,7 @@
 	<module name='civetweb' required='no' />
 	<module name='information' required='no' />
 
-	<dmi name='sample' url='dmi://bios/vendor' />
+	<dmi name='sample' url='dmi:///bios/vendor' />
 
 </config>
 
