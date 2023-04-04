@@ -32,7 +32,7 @@ jobs:
           fileName: "mingw-w64-x86_64-vmdetect-1.1-1-x86_64.pkg.tar.zst"
       - uses: robinraju/release-downloader@v1.7
         with:
-          repository: "PerryWerneck/dmiget"
+          repository: "PerryWerneck/libudjat"
           latest: true
           fileName: "mingw-w64-x86_64-libudjat-1.1-1-x86_64.pkg.tar.zst"
       - uses: robinraju/release-downloader@v1.7
