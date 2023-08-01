@@ -17,18 +17,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+ #include <udjat/tools/application.h>
  #include <udjat/module.h>
  #include <unistd.h>
- #include <udjat/agent.h>
- #include <udjat/tools/mainloop.h>
  #include <udjat/tools/logger.h>
- #include <udjat/tools/url.h>
 
  using namespace std;
  using namespace Udjat;
 
  int main(int argc, char **argv) {
 
+	Udjat::Quark::init();
+	Udjat::Logger::redirect();
+	Udjat::Logger::enable(Udjat::Logger::Trace);
+	Udjat::Logger::enable(Udjat::Logger::Debug);
+	Udjat::Logger::console(true);
+
+	udjat_module_init();
+
+	return Application{}.run(argc,argv,"./test.xml");
+
+	/*
 	setlocale( LC_ALL, "" );
 
 	Logger::redirect(true);
@@ -64,6 +73,7 @@
 	cout << "Removing module" << endl;
 	delete module;
 	Module::unload();
+	*/
 
 	return 0;
 }
