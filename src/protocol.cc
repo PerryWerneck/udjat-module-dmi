@@ -20,14 +20,16 @@
  #include "config.h"
  #include "private.h"
  #include <udjat/tools/url.h>
- #include <dmiget/table.h>
+ #include <smbios/value.h>
 
  Udjat::DMI::Protocol::Protocol() : Udjat::Protocol("dmi",moduleinfo) {
 
  }
 
  Udjat::String Udjat::DMI::Protocol::call(const URL &url, const HTTP::Method UDJAT_UNUSED(method), const char UDJAT_UNUSED(*payload)) const {
-	return Udjat::String(::DMIget::Table()[url.c_str()].c_str());
+
+	return Udjat::String{ SMBios::Value::find(url.c_str())->to_string() };
+
  }
 
 
