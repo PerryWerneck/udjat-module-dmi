@@ -23,6 +23,7 @@
  #include <udjat/tools/url.h>
  #include <smbios/value.h>
  #include <udjat/tools/file.h>
+ #include <dmiget/smbios/smbios.h>
 
  namespace Udjat {
 
@@ -50,11 +51,11 @@
 
 				URL url{this->url()};
 
-				debug("Testing '",url.c_str(),"'");
+				debug("Testing '",url.ComponentsFactory().path.c_str(),"'");
 
 				try {
 
-					String value{SMBios::Value::find(url.c_str())->to_string()};
+					String value{SMBios::Value::find(url.ComponentsFactory().path.c_str())->to_string()};
 					String pattern;
 
 					debug("value='",value,"'");
