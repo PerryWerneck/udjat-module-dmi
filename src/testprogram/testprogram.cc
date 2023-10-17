@@ -21,6 +21,7 @@
  #include <udjat/module.h>
  #include <unistd.h>
  #include <udjat/tools/logger.h>
+ #include <udjat/tools/url.h>
 
  using namespace std;
  using namespace Udjat;
@@ -35,7 +36,14 @@
 
 	udjat_module_init();
 
-	return Application{}.run(argc,argv,"./test.xml");
+	{
+		URL url{"dmi:///chassis/manufacturer?value=*lenovo*"};
+		auto test_result = url.test();
+		cout << "URL " << url << " Test result was " << test_result << endl;
+	}
+
+
+	// return Application{}.run(argc,argv,"./test.xml");
 
 	/*
 	setlocale( LC_ALL, "" );

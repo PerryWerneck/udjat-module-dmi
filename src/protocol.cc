@@ -50,10 +50,14 @@
 
 				URL url{this->url()};
 
+				debug("Testing '",url.c_str(),"'");
+
 				try {
 
 					String value{SMBios::Value::find(url.c_str())->to_string()};
 					String pattern;
+
+					debug("value='",value,"'");
 
 					if(value.empty()) {
 						return 404;
@@ -91,13 +95,25 @@
 					warning() << "Missing '?value=' or '?values=' on test URL" << endl;
 					return EINVAL;
 
+				} catch(const std::system_error &e) {
+
+					errno = e.code().value();
+					if(errno == ENOENT) {
+						warning() << url << ": " << e.what() << endl;
+						return 404;
+					}
+
+					error() << url << ": " << e.what() << endl;
+					return errno;
+
 				} catch(const std::exception &e) {
 
-					error() << url << ": " << e.what();
+					error() << url << ": " << e.what() << endl;
 					return 500;
 
 				} catch(...) {
 
+					debug("****");
 					error() << url << ": Unexpected error" << endl;
 					return 500;
 
