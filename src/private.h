@@ -71,6 +71,7 @@ namespace Udjat {
 		public:
 			Protocol();
 			Udjat::String call(const URL &url, const HTTP::Method method, const char *payload) const override;
+			std::shared_ptr<Protocol::Worker> WorkerFactory() const override;
 
 		};
 
