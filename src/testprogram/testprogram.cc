@@ -17,71 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
- #include <udjat/tools/application.h>
- #include <udjat/module.h>
- #include <unistd.h>
+ #include <config.h>
  #include <udjat/tools/logger.h>
- #include <udjat/tools/url.h>
+ #include <udjat/tools/application.h>
+ #include <udjat/moduleinfo.h>
+ #include <udjat/module.h>
+ #include <udjat/tools/logger.h>
+ #include <udjat/factory.h>
 
  using namespace std;
  using namespace Udjat;
 
+//---[ Implement ]------------------------------------------------------------------------------------------
+
  int main(int argc, char **argv) {
 
-	Udjat::Quark::init();
-	Udjat::Logger::redirect();
-	Udjat::Logger::enable(Udjat::Logger::Trace);
-	Udjat::Logger::enable(Udjat::Logger::Debug);
-	Udjat::Logger::console(true);
+ 	Logger::verbosity(9);
+	Logger::redirect();
 
-	udjat_module_init();
+ 	udjat_module_init();
+	auto rc = Application{}.run(argc,argv,"./test.xml");
 
-	{
-		URL url{"dmi:///chassis/manufacturer?value=*lenovo*"};
-		auto test_result = url.test();
-		cout << "URL " << url << " Test result was " << test_result << endl;
-	}
+	debug("Application exits with rc=",rc);
 
+	return rc;
 
-	// return Application{}.run(argc,argv,"./test.xml");
-
-	/*
-	setlocale( LC_ALL, "" );
-
-	Logger::redirect(true);
-
-	auto module = udjat_module_init();
-	Udjat::reconfigure("./test.xml",true);
-	auto agent = Abstract::Agent::root();
-
-	if(Module::find("httpd")) {
-
-		Logger::trace() << "http://localhost:8989" << endl;
-
-		for(auto child : *agent) {
-			Logger::trace() << "http://localhost:8989/api/1.0/agent/" << child->name() << ".xml" << endl;
-		}
-
-	}
-
-	try {
-
-		cout << "dmi:///bios/version= '" << Udjat::URL("dmi:///bios/version").get().c_str() << "'" << endl;
-
-	} catch(const std::exception &e) {
-		cerr << e.what() << endl;
-	}
-
-	cout << "Waiting for requests" << endl;
-
-	Udjat::MainLoop::getInstance().run();
-
-	Abstract::Agent::deinit();
-
-	cout << "Removing module" << endl;
-	delete module;
-	Module::unload();
-	*/
-
-	return 0;
-}
+ }

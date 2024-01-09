@@ -57,6 +57,7 @@ DEPENDS= \
 
 CFLAGS= \
 	@CXXFLAGS@ \
+	-Isrc \
 	-DBUILD_DATE=`date +%Y%m%d` \
 	@UDJAT_CFLAGS@ \
 	@PUGIXML_CFLAGS@ \
@@ -211,14 +212,14 @@ run: \
 ifeq ($(VALGRIND),no)
 
 	@LD_LIBRARY_PATH=$(BINDBG) \
-		$(BINDBG)/udjat@EXEEXT@
+		$(BINDBG)/udjat@EXEEXT@ -f
 
 else
 	@touch valgrind.suppression
 
 	@LD_LIBRARY_PATH=$(BINDBG) \
 		$(VALGRIND) --leak-check=full --track-origins=yes --gen-suppressions=all --suppressions=valgrind.suppression \
-		$(BINDBG)/udjat@EXEEXT@
+		$(BINDBG)/udjat@EXEEXT@ -f
 endif
 
 #---[ Clean Targets ]--------------------------------------------------------------------
