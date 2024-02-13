@@ -21,21 +21,43 @@
  #include "private.h"
  #include <udjat/tools/protocol.h>
  #include <udjat/tools/url.h>
- #include <smbios/value.h>
+ #include <dmiget/smbios/value.h>
  #include <udjat/tools/file.h>
  #include <dmiget/smbios/smbios.h>
 
  namespace Udjat {
 
-	 DMI::Protocol::Protocol() : Udjat::Protocol("dmi",moduleinfo) {
+	DMI::Protocol::Protocol() : Udjat::Protocol("dmi",moduleinfo) {
+	}
 
-	 }
-
-	 String DMI::Protocol::call(const URL &url, const HTTP::Method UDJAT_UNUSED(method), const char UDJAT_UNUSED(*payload)) const {
+	String DMI::Protocol::call(const URL &url, const HTTP::Method UDJAT_UNUSED(method), const char UDJAT_UNUSED(*payload)) const {
 		return Udjat::String{ SMBios::Value::find(url.c_str())->to_string() };
-	 }
+	}
 
-	 std::shared_ptr<Protocol::Worker> DMI::Protocol::WorkerFactory() const {
+	bool DMI::Protocol::call(const URL &url, Udjat::Value &value, const HTTP::Method method, const char *) const {
+
+		if(method == HTTP::Get) {
+
+			try {
+
+				auto smbios = SMBios::Value::find(url.c_str());
+				value["name"] = smbios->name();
+				value["description"] = smbios->description();
+				value["value"] = smbios->as_string();
+				return true;
+
+			} catch(const std::exception &e) {
+
+				Logger::String{url.c_str(),": ",e.what()}.warning(Protocol::c_str());
+
+			}
+
+		}
+
+		return false;
+	}
+
+	std::shared_ptr<Protocol::Worker> DMI::Protocol::WorkerFactory() const {
 
 		class Worker : public Protocol::Worker {
 		public:
