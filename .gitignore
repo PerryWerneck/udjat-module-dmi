@@ -56,4 +56,5 @@ intl
 m4
 po
 vgcore.*
+*.[0-9]
 

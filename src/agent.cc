@@ -29,14 +29,13 @@
  #include <unistd.h>
  #include <udjat/tools/quark.h>
  #include <cstring>
- #include <dmiget/table.h>
- #include <dmiget/value.h>
+ #include <smbios/value.h>
 
  Udjat::DMI::Agent::Agent(const char *u) : url(Quark(u).c_str()) {
 
 	try {
 
-		auto value = ::DMIget::Table().find(this->url);
+		auto value = SMBios::Value::find(this->url);
 		if(value) {
 			this->Object::properties.label = Quark(value->name()).c_str();
 			this->Object::properties.summary = Quark(value->description()).c_str();
@@ -67,7 +66,7 @@
 
  	try {
 
-		return ::DMIget::Table()[this->url];
+		return SMBios::Value::find(this->url)->to_string();
 
  	} catch(const std::exception &e) {
 

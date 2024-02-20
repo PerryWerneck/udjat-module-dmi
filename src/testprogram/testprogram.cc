@@ -17,53 +17,29 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
- #include <udjat/module.h>
- #include <unistd.h>
- #include <udjat/agent.h>
- #include <udjat/tools/mainloop.h>
+ #include <config.h>
  #include <udjat/tools/logger.h>
- #include <udjat/tools/url.h>
+ #include <udjat/tools/application.h>
+ #include <udjat/moduleinfo.h>
+ #include <udjat/module.h>
+ #include <udjat/tools/logger.h>
+ #include <udjat/factory.h>
 
  using namespace std;
  using namespace Udjat;
 
+//---[ Implement ]------------------------------------------------------------------------------------------
+
  int main(int argc, char **argv) {
 
-	setlocale( LC_ALL, "" );
+ 	Logger::verbosity(9);
+	Logger::redirect();
 
-	Logger::redirect(true);
+ 	udjat_module_init();
+	auto rc = Application{}.run(argc,argv,"./test.xml");
 
-	auto module = udjat_module_init();
-	Udjat::reconfigure("./test.xml",true);
-	auto agent = Abstract::Agent::root();
+	debug("Application exits with rc=",rc);
 
-	if(Module::find("httpd")) {
+	return rc;
 
-		Logger::trace() << "http://localhost:8989" << endl;
-
-		for(auto child : *agent) {
-			Logger::trace() << "http://localhost:8989/api/1.0/agent/" << child->name() << ".xml" << endl;
-		}
-
-	}
-
-	try {
-
-		cout << "dmi:///bios/version= '" << Udjat::URL("dmi:///bios/version").get().c_str() << "'" << endl;
-
-	} catch(const std::exception &e) {
-		cerr << e.what() << endl;
-	}
-
-	cout << "Waiting for requests" << endl;
-
-	Udjat::MainLoop::getInstance().run();
-
-	Abstract::Agent::deinit();
-
-	cout << "Removing module" << endl;
-	delete module;
-	Module::unload();
-
-	return 0;
-}
+ }

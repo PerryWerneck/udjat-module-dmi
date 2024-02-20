@@ -1,14 +1,38 @@
 
-#---[ Library configuration ]------------------------------------------------------------
+#---[ Paths ]----------------------------------------------------------------------------
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+sbindir=@sbindir@
+libdir=@libdir@
+includedir=@includedir@
+datarootdir=@datarootdir@
+localedir=@localedir@
+docdir=@docdir@
+sysconfdir=/etc
+srcdir=@srcdir@
+
+BASEDIR=@BASEDIR@
+
+OBJDIR=.obj
+OBJDBG=$(OBJDIR)/Debug
+OBJRLS=$(OBJDIR)/Release
+
+BINDIR=$(BASEDIR)/.bin
+BINDBG=$(BINDIR)/Debug
+BINRLS=$(BINDIR)/Release
+
+#---[ Module coniguration ]--------------------------------------------------------------
 
 PACKAGE_NAME=@PACKAGE_NAME@
 
 MAIN_SOURCES= \
-	$(wildcard src/*.cc) \
-	$(wildcard src/tools/os/@OSNAME@/*.cc)
+	$(wildcard $(srcdir)/src/*.cc) \
+	$(wildcard $(srcdir)/src/tools/os/@OSNAME@/*.cc)
 
 TEST_SOURCES= \
-	$(wildcard src/testprogram/*.cc)
+	$(wildcard $(srcdir)/src/testprogram/*.cc)
 
 #---[ Tools ]----------------------------------------------------------------------------
 
@@ -26,29 +50,6 @@ AR=@AR@
 VALGRIND=@VALGRIND@
 DLLTOOL=@DLLTOOL@
 
-#---[ Paths ]----------------------------------------------------------------------------
-
-prefix=@prefix@
-exec_prefix=@exec_prefix@
-bindir=@bindir@
-sbindir=@sbindir@
-libdir=@libdir@
-includedir=@includedir@
-datarootdir=@datarootdir@
-localedir=@localedir@
-docdir=@docdir@
-sysconfdir=/etc
-
-BASEDIR=@BASEDIR@
-
-OBJDIR=.obj
-OBJDBG=$(OBJDIR)/Debug
-OBJRLS=$(OBJDIR)/Release
-
-BINDIR=$(BASEDIR)/.bin
-BINDBG=$(BINDIR)/Debug
-BINRLS=$(BINDIR)/Release
-
 #---[ Rules ]----------------------------------------------------------------------------
 
 DEPENDS= \
@@ -57,6 +58,7 @@ DEPENDS= \
 
 CFLAGS= \
 	@CXXFLAGS@ \
+	-Isrc \
 	-DBUILD_DATE=`date +%Y%m%d` \
 	@UDJAT_CFLAGS@ \
 	@PUGIXML_CFLAGS@ \
@@ -211,14 +213,14 @@ run: \
 ifeq ($(VALGRIND),no)
 
 	@LD_LIBRARY_PATH=$(BINDBG) \
-		$(BINDBG)/udjat@EXEEXT@
+		$(BINDBG)/udjat@EXEEXT@ -f
 
 else
 	@touch valgrind.suppression
 
 	@LD_LIBRARY_PATH=$(BINDBG) \
 		$(VALGRIND) --leak-check=full --track-origins=yes --gen-suppressions=all --suppressions=valgrind.suppression \
-		$(BINDBG)/udjat@EXEEXT@
+		$(BINDBG)/udjat@EXEEXT@ -f
 endif
 
 #---[ Clean Targets ]--------------------------------------------------------------------
