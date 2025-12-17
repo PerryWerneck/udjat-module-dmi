@@ -104,7 +104,7 @@ if cxx.compiles('#include <unistd.h>', name : 'unistd.h')
   app_conf.set('HAVE_UNISTD_H', 1)
 endif
 
-#includes_dir = include_directories('src/include')
+includes_dir = include_directories('src/include')
 
 #
 # Sources
@@ -171,6 +171,7 @@ if host_machine.system() == 'windows'
     link_args: [ 
       '-lws2_32',
     ],
+    include_directories: includes_dir,
   )
 
   static_library = declare_dependency(
@@ -186,6 +187,7 @@ if host_machine.system() == 'windows'
       '-lws2_32',
       '-lwinhttp',
     ],
+    include_directories: includes_dir,
   )
 
   # https://mesonbuild.com/Reference-manual_functions.html#shared_library
@@ -199,6 +201,7 @@ if host_machine.system() == 'windows'
     install_dir: libudjat.get_variable('module_path'),
     gnu_symbol_visibility: 'hidden',
     dependencies: lib_deps,
+    include_directories: includes_dir,
   )
 
 else
@@ -212,6 +215,7 @@ else
     cpp_args: [ '-ffat-lto-objects' ],    
     gnu_symbol_visibility: 'hidden',
     dependencies: lib_deps,
+    include_directories: includes_dir,
   )
 
   # https://mesonbuild.com/Reference-manual_functions.html#shared_library
@@ -224,6 +228,7 @@ else
     install_dir: libudjat.get_variable('module_path'),
     gnu_symbol_visibility: 'hidden',
     dependencies: lib_deps,
+    include_directories: includes_dir,
   )
 
   static_library = declare_dependency(
@@ -234,6 +239,7 @@ else
       dependencies: lib_deps,
       cpp_args: [ '-DSTATIC_LIBRARY', '-fno-lto' ],
     ),
+    include_directories: includes_dir,
   )
 
 endif

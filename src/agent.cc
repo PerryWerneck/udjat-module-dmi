@@ -23,14 +23,18 @@
  // https://github.com/mirror/dmidecode/blob/master/dmidecode.c
  // https://gitlab.yottabyte.com/open-source/mcelog/-/blob/master/dmi.c
 
+ #include <config.h>
+
  #include <private.h>
  #include <sys/stat.h>
  #include <fcntl.h>
  #include <unistd.h>
  #include <udjat/tools/quark.h>
+ #include <udjat/agent/dmi.h>
  #include <cstring>
  #include <smbios/value.h>
-
+ #include <udjat/tools/logger.h>
+ 
  Udjat::DMI::Agent::Agent(const char *u) : url(Quark(u).c_str()) {
 
 	try {
@@ -40,12 +44,12 @@
 			this->Object::properties.label = Quark(value->name()).c_str();
 			this->Object::properties.summary = Quark(value->description()).c_str();
 		} else {
-			warning() << "Query for '" << this->url << "' returned an empty response" << endl;
+			Logger::String{"Query for '",this->url,"' returned an empty response"}.warning(name());
 		}
 
 	} catch(const std::exception &e) {
 
-		error() << this->url << ": '" << e.what() << "'" << endl;
+		Logger::String{this->url,": '",e.what(),"'"}.error(name());
 
 	}
 
@@ -70,11 +74,11 @@
 
  	} catch(const std::exception &e) {
 
- 		error() << "Error '" << e.what() << "' getting " << this->url << endl;
+ 		Logger::String{"Error '",e.what(),"' getting ",this->url}.error(name());
 
  	} catch(...) {
 
-		error() << "dmi\tUnexpected error getting " << this->url << endl;
+		Logger::String{"Unexpected error getting ",this->url}.error(name());
 
  	}
 

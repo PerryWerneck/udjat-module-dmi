@@ -17,27 +17,18 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
- #include "config.h"
+ #include <config.h>
  #include <private.h>
- #include <udjat/moduleinfo.h>
+ #include <udjat/agent/dmi.h>
+ #include <udjat/tools/xml.h>
 
  namespace Udjat {
 
-	static const ModuleInfo moduleinfo{"DMI Agent factory"};
-
-	DMI::Factory::Factory() : Udjat::Factory("dmi",moduleinfo) {
+	DMI::Agent::Factory::Factory(const char *name) : Udjat::Abstract::Agent::Factory(name) {
 	}
 
-	DMI::Factory::~Factory() {
-	}
-
-	std::shared_ptr<Abstract::Agent> DMI::Factory::AgentFactory(const Abstract::Object UDJAT_UNUSED(&parent), const pugi::xml_node &node) const {
+	std::shared_ptr<Abstract::Agent> DMI::Agent::Factory::AgentFactory(const pugi::xml_node &node) const {
 		return make_shared<DMI::Agent>(node);
 	}
-
-	std::shared_ptr<Abstract::Agent> DMI::Factory::factory(const char *id) const {
-		return make_shared<DMI::Agent>(id);
-	}
-
 
  }

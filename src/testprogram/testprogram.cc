@@ -20,7 +20,6 @@
  #include <config.h>
  #include <udjat/tools/logger.h>
  #include <udjat/tools/application.h>
- #include <udjat/moduleinfo.h>
  #include <udjat/module.h>
  #include <udjat/tools/logger.h>
  #include <udjat/factory.h>
