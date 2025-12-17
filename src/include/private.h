@@ -19,14 +19,14 @@
 
 #pragma once
 
+#include <config.h>
 #include <udjat/defs.h>
 #include <udjat/module.h>
 #include <udjat/tools/url.h>
-#include <udjat/tools/protocol.h>
 #include <udjat/tools/string.h>
 #include <udjat/agent.h>
-#include <udjat/factory.h>
 #include <stdexcept>
+#include <udjat/agent/abstract.h>
 
 using namespace std;
 using namespace Udjat;
@@ -35,8 +35,7 @@ namespace Udjat {
 
 	namespace DMI {
 
-		extern const ::Udjat::ModuleInfo moduleinfo;
-
+		/*
 		/// @brief SMBIOS read agent.
 		class Factory : public Udjat::Factory {
 		private:
@@ -49,23 +48,9 @@ namespace Udjat {
 			std::shared_ptr<Abstract::Agent> factory(const char *id) const;
 
 		};
+		*/
 
-		/// @brief DMI Agent.
-		class UDJAT_API Agent : public Udjat::Abstract::Agent {
-		private:
-			const char *url = nullptr;
-
-		public:
-			Agent(const char *url);
-			Agent(const pugi::xml_node &node);
-			virtual ~Agent();
-
-			Udjat::Value & get(Udjat::Value &value) const override;
-
-			std::string to_string() const noexcept override;
-
-		};
-
+		/*
 		/// @brief DMI:// protocol handler
 		class Protocol : public Udjat::Protocol {
 		public:
@@ -91,6 +76,7 @@ namespace Udjat {
 			static Controller & getInstance();
 
 		};
+		*/
 
 
 

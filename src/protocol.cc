@@ -18,7 +18,7 @@
  */
 
  #include "config.h"
- #include "private.h"
+ #include <private.h>
  #include <udjat/tools/protocol.h>
  #include <udjat/tools/url.h>
  #include <dmiget/smbios/value.h>

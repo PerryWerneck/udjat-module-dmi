@@ -18,7 +18,7 @@
  */
 
  #include "config.h"
- #include "private.h"
+ #include <private.h>
  #include <udjat/moduleinfo.h>
 
  Udjat::DMI::Controller * Udjat::DMI::Controller::instance = nullptr;

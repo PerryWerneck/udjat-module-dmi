@@ -18,7 +18,7 @@
  */
 
 #include <config.h>
-#include "private.h"
+#include <private.h>
 
 /// @brief Register udjat module.
 Udjat::Module * udjat_module_init() {

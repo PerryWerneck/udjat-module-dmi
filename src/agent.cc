@@ -23,7 +23,7 @@
  // https://github.com/mirror/dmidecode/blob/master/dmidecode.c
  // https://gitlab.yottabyte.com/open-source/mcelog/-/blob/master/dmi.c
 
- #include "private.h"
+ #include <private.h>
  #include <sys/stat.h>
  #include <fcntl.h>
  #include <unistd.h>
