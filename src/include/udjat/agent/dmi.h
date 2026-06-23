@@ -23,6 +23,7 @@
 #include <udjat/defs.h>
 #include <udjat/agent.h>
 #include <udjat/agent/abstract.h>
+#include <udjat/tools/xml.h>
 
 using namespace std;
 using namespace Udjat;
@@ -51,7 +52,7 @@ namespace Udjat {
 			};
 
 			Agent(const char *url);
-			Agent(const pugi::xml_node &node);
+			Agent(const XML::Node &node);
 			virtual ~Agent();
 
 			Udjat::Value & get(Udjat::Value &value) const override;

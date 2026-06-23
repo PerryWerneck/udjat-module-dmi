@@ -21,7 +21,7 @@
 
 Summary:		%{product_name} DMI Module 
 Name:			udjat-module-dmi
-Version:		1.0
+Version: 2.0.0
 Release:		0
 License:		LGPL-3.0
 Source:			%{name}-%{version}.tar.xz

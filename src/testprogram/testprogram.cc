@@ -21,16 +21,19 @@
  #include <udjat/tools/logger.h>
  #include <udjat/tools/application.h>
  #include <udjat/module.h>
- #include <udjat/tools/logger.h>
- #include <udjat/factory.h>
+ #include <udjat/tools/loader.h>
 
  using namespace std;
  using namespace Udjat;
 
 //---[ Implement ]------------------------------------------------------------------------------------------
 
- int main(int argc, char **argv) {
+ int main(const int argc, const char **argv) {
 
+	return Udjat::loader(argc, argv);
+
+
+	/*
  	Logger::verbosity(9);
 	Logger::redirect();
 
@@ -40,5 +43,6 @@
 	debug("Application exits with rc=",rc);
 
 	return rc;
+	*/
 
  }

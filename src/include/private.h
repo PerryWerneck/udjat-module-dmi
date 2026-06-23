@@ -44,7 +44,7 @@ namespace Udjat {
 			Factory();
 			virtual ~Factory();
 
-			std::shared_ptr<Abstract::Agent> AgentFactory(const Abstract::Object &parent, const pugi::xml_node &node) const override;
+			std::shared_ptr<Abstract::Agent> AgentFactory(const Abstract::Object &parent, const XML::Node &node) const override;
 			std::shared_ptr<Abstract::Agent> factory(const char *id) const;
 
 		};

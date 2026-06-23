@@ -18,7 +18,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 project(
-	'udjathttp', 
+	'udjatdmi', 
 	['cpp'],
 	version: '2.0.0',
 	default_options : ['c_std=c11', 'cpp_std=c++17', 'buildtype=release'],
@@ -48,7 +48,7 @@ libversion = '@0@.@1@'.format(pkg_major_version,pkg_minor_version)
 #
 libudjat = dependency(
   'libudjat',
-  version: '>=2.2.0',
+  version: '>=2.7.0',
   fallback: ['libudjat', 'static_library'],
 )
 

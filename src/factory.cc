@@ -27,7 +27,7 @@
 	DMI::Agent::Factory::Factory(const char *name) : Udjat::Abstract::Agent::Factory(name) {
 	}
 
-	std::shared_ptr<Abstract::Agent> DMI::Agent::Factory::AgentFactory(const pugi::xml_node &node) const {
+	std::shared_ptr<Abstract::Agent> DMI::Agent::Factory::AgentFactory(const XML::Node &node) const {
 		return make_shared<DMI::Agent>(node);
 	}
 
