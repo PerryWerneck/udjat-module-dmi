@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: LGPL-3.0-or-later */
 
 /*
- * Copyright (C) 2021 Perry Werneck <perry.werneck@gmail.com>
+ * Copyright (C) 2026 Perry Werneck <perry.werneck@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published
@@ -18,31 +18,14 @@
  */
 
  #include <config.h>
- #include <udjat/tools/logger.h>
- #include <udjat/tools/application.h>
- #include <udjat/module.h>
+ #include <udjat/defs.h>
  #include <udjat/tools/loader.h>
-
- using namespace std;
+ 
  using namespace Udjat;
-
-//---[ Implement ]------------------------------------------------------------------------------------------
-
- int main(const int argc, const char **argv) {
-
-	return Udjat::loader(argc, argv);
-
-
-	/*
- 	Logger::verbosity(9);
-	Logger::redirect();
-
- 	udjat_module_init();
-	auto rc = Application{}.run(argc,argv,"./test.xml");
-
-	debug("Application exits with rc=",rc);
-
-	return rc;
-	*/
+ 
+ int main(int argc, char **argv) {
+	return loader(argc, argv, [](const LoaderMode mode, Application &app, const char *arg){
+		return 0;
+	});
 
  }
